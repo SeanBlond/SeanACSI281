@@ -37,23 +37,24 @@
 
 using namespace std;
 
-namespace csi281 {
+namespace csi281
+{
 
-  // Remove extraneous characters from string so it can
-  // be converted into a number
-  void clean(string &str);
+    // Remove extraneous characters from string so it can
+    // be converted into a number
+    void clean(string &str);
 
-  // Read from a input string stream we hit the next comma, or the end
-  // and try to convert it into the type we seek.
-  float readFloatCell(istringstream &iss);
-  int readIntCell(istringstream &iss);
-  string readStringCell(istringstream &iss);
+    // Read from a input string stream we hit the next comma, or the end
+    // and try to convert it into the type we seek.
+    float readFloatCell(istringstream &iss);
+    int readIntCell(istringstream &iss);
+    string readStringCell(istringstream &iss);
 
-  // Read a single line from a file stream and turn it into a CityYear
-  CityYear readLine(ifstream &file);
+    // Read a single line from a file stream and turn it into a CityYear
+    CityYear readLine(ifstream &file);
 
-  // Read city by looking at the specified lines in the CSV
-  CityTemperatureData* readCity(string cityName, string fileName, int startLine, int endLine);
+    // Read city by looking at the specified lines in the CSV
+    CityTemperatureData *readCity(string cityName, string fileName, int startLine, int endLine);
 }  // namespace csi281
 
 #endif /* csv_hpp */

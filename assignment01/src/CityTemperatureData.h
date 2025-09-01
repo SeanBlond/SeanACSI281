@@ -34,36 +34,39 @@
 
 using namespace std;
 
-namespace csi281 {
+namespace csi281
+{
 
-  // Represents one year of a city's data
-  struct CityYear {
-    int year;
-    int numDaysBelow32;
-    int numDaysAbove90;
-    float averageTemperature;
-    float averageMax;
-    float averageMin;
-  };
+    // Represents one year of a city's data
+    struct CityYear
+    {
+        int year;
+        int numDaysBelow32;
+        int numDaysAbove90;
+        float averageTemperature;
+        float averageMax;
+        float averageMin;
+    };
 
-  // Represents all of the data for a city in aggregate
-  class CityTemperatureData {
-  public:
-    CityTemperatureData(const string name, CityYear data[], int numYears);
-    ~CityTemperatureData();
-    int count() const { return _count; }
-    const string& getName() const { return _name; }
-    int getFirstYear() const { return _data[0].year; }
-    const CityYear operator[](const int year) const;
-    float getAllTimeAverage() const;
-    int getTotalDaysBelow32() const;
-    int getTotalDaysAbove90() const;
+    // Represents all of the data for a city in aggregate
+    class CityTemperatureData
+    {
+      public:
+        CityTemperatureData(const string name, CityYear data[], int numYears);
+        ~CityTemperatureData();
+        int count() const { return _count; }
+        const string& getName() const { return _name; }
+        int getFirstYear() const { return _data[0].year; }
+        const CityYear operator[](const int year) const;
+        float getAllTimeAverage() const;
+        int getTotalDaysBelow32() const;
+        int getTotalDaysAbove90() const;
 
-  private:
-    string _name;     // name of city
-    CityYear* _data;  // array of CityYear
-    int _count;       // number of years covered by the class
-  };
+      private:
+        string _name;     // name of city
+        CityYear* _data;  // array of CityYear
+        int _count;       // number of years covered by the class
+    };
 }  // namespace csi281
 
 #endif /* CityTemperatureData_hpp */

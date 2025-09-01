@@ -33,95 +33,106 @@
 
 using namespace std;
 
-namespace csi281 {
+namespace csi281
+{
 
-  // Remove extraneous characters from string so it can
-  // be converted into a number
-  void clean(string &str) {
-    string unwanted = "\"\' \t\n";
-    str.erase(
-        remove_if(str.begin(), str.end(), [&](char &c) { return !unwanted.find_first_of(c); }));
-  }
-
-  // Read from a input string stream we hit the next comma, or the end
-  // and try to convert it into the float we seek.
-  float readFloatCell(istringstream &iss) {
-    string holder;
-    getline(iss, holder, ',');
-    clean(holder);
-    return stof(holder);
-  }
-
-  // Read from a input string stream we hit the next comma, or the end
-  // and try to convert it into the int we seek.
-  int readIntCell(istringstream &iss) {
-    string holder;
-    getline(iss, holder, ',');
-    clean(holder);
-    return stoi(holder);
-  }
-
-  // Read from a input string stream we hit the next comma, or the end
-  // and try to convert it into the string we seek.
-  string readStringCell(istringstream &iss) {
-    string holder;
-    getline(iss, holder, ',');
-    return holder;
-  }
-
-  // Read a single line from a file stream and turn it into a CityYear
-  // You'll want to use the standard library function getline()
-  // and the readCell() functions above
-  // You'll also want to construct a CityYear from what you have read from the file
-  CityYear readLine(ifstream &file) {
-    CityYear tempCity;
-    string tempString;
-    getline(file, tempString);
-    istringstream cell(tempString);
-
-    // Discarding Irrelavent information
-    readStringCell(cell);
-    readStringCell(cell);
-
-    // Reading Year Data
-    tempCity.year = readIntCell(cell);
-    tempCity.numDaysBelow32 = readIntCell(cell);
-    tempCity.numDaysAbove90 = readIntCell(cell);
-    tempCity.averageTemperature = readFloatCell(cell);
-    tempCity.averageMax = readFloatCell(cell);
-    tempCity.averageMin = readFloatCell(cell);
-
-    return tempCity;
-  }
-
-  // Read city by looking at the specified lines in the CSV
-  // You'll need to open an ifstream to fileName
-  // You'll need to read CityYears from the file using readLine() until there
-  // is nothing left to read
-  // The ifstream method good() may be useful
-  // Make sure to just read between startLine and endLine (inclusive of endLine)
-  // Construct a CityTemperatureData and return it
-  // create an array of CityYear instances to pass to the CityTemperatureData constructor
-  // when the CityTemperatureData is created, it will take ownership of the array
-  CityTemperatureData *readCity(string cityName, string fileName, int startLine, int endLine) {
-    const int count = (endLine - startLine + 1);
-    CityYear *data = new CityYear[count];
-    ifstream file(fileName);
-
-    string tempLine;
-    int dataIndex = 0;
-
-    for (int i = 0; i <= endLine; i++) {
-      if (i >= startLine) {
-        *(data + dataIndex) = readLine(file);
-        dataIndex++;
-      } else {
-        getline(file, tempLine);
-      }
+    // Remove extraneous characters from string so it can
+    // be converted into a number
+    void clean(string &str)
+    {
+        string unwanted = "\"\' \t\n";
+        str.erase(
+            remove_if(str.begin(), str.end(), [&](char &c) { return !unwanted.find_first_of(c); }));
     }
 
-    file.close();
-    CityTemperatureData *tempCityData = new CityTemperatureData(cityName, data, count);
-    return tempCityData;
-  }
+    // Read from a input string stream we hit the next comma, or the end
+    // and try to convert it into the float we seek.
+    float readFloatCell(istringstream &iss)
+    {
+        string holder;
+        getline(iss, holder, ',');
+        clean(holder);
+        return stof(holder);
+    }
+
+    // Read from a input string stream we hit the next comma, or the end
+    // and try to convert it into the int we seek.
+    int readIntCell(istringstream &iss)
+    {
+        string holder;
+        getline(iss, holder, ',');
+        clean(holder);
+        return stoi(holder);
+    }
+
+    // Read from a input string stream we hit the next comma, or the end
+    // and try to convert it into the string we seek.
+    string readStringCell(istringstream &iss)
+    {
+        string holder;
+        getline(iss, holder, ',');
+        return holder;
+    }
+
+    // Read a single line from a file stream and turn it into a CityYear
+    // You'll want to use the standard library function getline()
+    // and the readCell() functions above
+    // You'll also want to construct a CityYear from what you have read from the file
+    CityYear readLine(ifstream &file)
+    {
+        CityYear tempCity;
+        string tempString;
+        getline(file, tempString);
+        istringstream cell(tempString);
+
+        // Discarding Irrelavent information
+        readStringCell(cell);
+        readStringCell(cell);
+
+        // Reading Year Data
+        tempCity.year = readIntCell(cell);
+        tempCity.numDaysBelow32 = readIntCell(cell);
+        tempCity.numDaysAbove90 = readIntCell(cell);
+        tempCity.averageTemperature = readFloatCell(cell);
+        tempCity.averageMax = readFloatCell(cell);
+        tempCity.averageMin = readFloatCell(cell);
+
+        return tempCity;
+    }
+
+    // Read city by looking at the specified lines in the CSV
+    // You'll need to open an ifstream to fileName
+    // You'll need to read CityYears from the file using readLine() until there
+    // is nothing left to read
+    // The ifstream method good() may be useful
+    // Make sure to just read between startLine and endLine (inclusive of endLine)
+    // Construct a CityTemperatureData and return it
+    // create an array of CityYear instances to pass to the CityTemperatureData constructor
+    // when the CityTemperatureData is created, it will take ownership of the array
+    CityTemperatureData *readCity(string cityName, string fileName, int startLine, int endLine)
+    {
+        const int count = (endLine - startLine + 1);
+        CityYear *data = new CityYear[count];
+        ifstream file(fileName);
+
+        string tempLine;
+        int dataIndex = 0;
+
+        for (int i = 0; i <= endLine; i++)
+        {
+            if (i >= startLine)
+            {
+                *(data + dataIndex) = readLine(file);
+                dataIndex++;
+            }
+            else
+            {
+                getline(file, tempLine);
+            }
+        }
+
+        file.close();
+        CityTemperatureData *tempCityData = new CityTemperatureData(cityName, data, count);
+        return tempCityData;
+    }
 }  // namespace csi281
