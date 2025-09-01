@@ -75,56 +75,46 @@ namespace csi281 {
   // You'll also want to construct a CityYear from what you have read from the file
   CityYear readLine(ifstream &file) {
     CityYear tempCity;
-
     string tempString;
     istringstream cell(tempString);
 
-
+    getline(file, tempString, ','); 
     getline(file, tempString, ',');
-    //cout << "Irrelavant Info: " << tempString << endl; 
-    getline(file, tempString, ',');
-    //cout << "Irrelavant Info: " << tempString << endl; 
 
     getline(file, tempString, ',');
     cell.clear();
     cell.str(tempString);
     int year = readIntCell(cell);
-    //cout << "Read Year: " << year << endl;
     tempCity.year = year;
 
     getline(file, tempString, ',');
     cell.clear();
     cell.str(tempString);
     int below = readIntCell(cell);
-    //cout << "Read Below: " << below << endl;
     tempCity.numDaysBelow32 = below;
 
     getline(file, tempString, ',');
     cell.clear();
     cell.str(tempString);
     int above = readIntCell(cell);
-    //cout << "Read Above: " << above << endl;
     tempCity.numDaysAbove90 = above;
 
     getline(file, tempString, ',');
     cell.clear();
     cell.str(tempString);
     float average = readFloatCell(cell);
-    //cout << "Read Average: " << average << endl;
     tempCity.averageTemperature = average;
 
     getline(file, tempString, ',');
     cell.clear();
     cell.str(tempString);
     float max = readFloatCell(cell);
-    //cout << "Read Max: " << max << endl;
     tempCity.averageMax = max;
 
     getline(file, tempString, '\n');
     cell.clear();
     cell.str(tempString);
     float min = readFloatCell(cell);
-    //cout << "Read Min: " << min << endl;
     tempCity.averageMin = min;
 
 
@@ -143,22 +133,22 @@ namespace csi281 {
   // when the CityTemperatureData is created, it will take ownership of the array
   CityTemperatureData *readCity(string cityName, string fileName, int startLine, int endLine) 
   {
-    cout << "Lines: " << startLine << " and " << endLine << endl;
     const int count = (endLine - startLine);
-    CityYear data [50];
+    CityYear *data = new CityYear[count];
     ifstream file(fileName);
 
     string tempLine;
+    int dataIndex = 0;
 
     for (int i = 0; i < endLine; i++)
     {
-      cout << "Loop " << i << endl;
-      if (i >= startLine)
-        data[i] = readLine(file);
+      if (i >= startLine) {
+        *(data + dataIndex) = readLine(file);
+        dataIndex++;
+      }
       else
       {
         getline(file, tempLine);
-        cout << "Read Irrelavent line: " << tempLine << endl;
       }
     }
 
