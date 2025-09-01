@@ -191,7 +191,7 @@ int main(int argc, char *argv[]) {
   // draw graphs
   cout << "Reading NYC" << endl;
   CityTemperatureData* nyc = readCity("NYC", "tempdata.csv", 1, 51);
-  cout << "NYC Successfully Read" << endl;
+  cout << "NYC Successfully Read" << endl << endl;
   cout << "Reading Burlington" << endl;
   CityTemperatureData* burlington = readCity("Burlington", "tempdata.csv", 52, 102);
   cout << "Burlington Successfully Read" << endl;

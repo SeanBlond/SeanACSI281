@@ -117,8 +117,6 @@ namespace csi281 {
     float min = readFloatCell(cell);
     tempCity.averageMin = min;
 
-
-    cout << "City Data year " << year << " saved" << endl;
     return tempCity;
   }
 
