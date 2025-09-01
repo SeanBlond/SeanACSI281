@@ -76,48 +76,21 @@ namespace csi281 {
   CityYear readLine(ifstream &file) {
     CityYear tempCity;
     string tempString;
+    getline(file, tempString);
     istringstream cell(tempString);
 
-    getline(file, tempString, ','); 
-    getline(file, tempString, ',');
+    // Discarding Irrelavent information
+    readStringCell(cell);
+    readStringCell(cell);
 
-    getline(file, tempString, ',');
-    cell.clear();
-    cell.str(tempString);
-    int year = readIntCell(cell);
-    tempCity.year = year;
+    // Reading Year Data
+    tempCity.year = readIntCell(cell);
+    tempCity.numDaysBelow32 = readIntCell(cell);
+    tempCity.numDaysAbove90 = readIntCell(cell);
+    tempCity.averageTemperature = readFloatCell(cell);
+    tempCity.averageMax = readFloatCell(cell);
+    tempCity.averageMin = readFloatCell(cell);
 
-    getline(file, tempString, ',');
-    cell.clear();
-    cell.str(tempString);
-    int below = readIntCell(cell);
-    tempCity.numDaysBelow32 = below;
-
-    getline(file, tempString, ',');
-    cell.clear();
-    cell.str(tempString);
-    int above = readIntCell(cell);
-    tempCity.numDaysAbove90 = above;
-
-    getline(file, tempString, ',');
-    cell.clear();
-    cell.str(tempString);
-    float average = readFloatCell(cell);
-    tempCity.averageTemperature = average;
-
-    getline(file, tempString, ',');
-    cell.clear();
-    cell.str(tempString);
-    float max = readFloatCell(cell);
-    tempCity.averageMax = max;
-
-    getline(file, tempString, '\n');
-    cell.clear();
-    cell.str(tempString);
-    float min = readFloatCell(cell);
-    tempCity.averageMin = min;
-
-    //cout << "Year " << year << " successfully read!" << endl;
     return tempCity;
   }
 
@@ -130,8 +103,7 @@ namespace csi281 {
   // Construct a CityTemperatureData and return it
   // create an array of CityYear instances to pass to the CityTemperatureData constructor
   // when the CityTemperatureData is created, it will take ownership of the array
-  CityTemperatureData *readCity(string cityName, string fileName, int startLine, int endLine) 
-  {
+  CityTemperatureData *readCity(string cityName, string fileName, int startLine, int endLine) {
     const int count = (endLine - startLine + 1);
     CityYear *data = new CityYear[count];
     ifstream file(fileName);
@@ -139,14 +111,11 @@ namespace csi281 {
     string tempLine;
     int dataIndex = 0;
 
-    for (int i = 0; i <= endLine; i++)
-    {
+    for (int i = 0; i <= endLine; i++) {
       if (i >= startLine) {
         *(data + dataIndex) = readLine(file);
         dataIndex++;
-      }
-      else
-      {
+      } else {
         getline(file, tempLine);
       }
     }
