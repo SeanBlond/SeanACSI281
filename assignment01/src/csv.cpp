@@ -117,6 +117,7 @@ namespace csi281 {
     float min = readFloatCell(cell);
     tempCity.averageMin = min;
 
+    //cout << "Year " << year << " successfully read!" << endl;
     return tempCity;
   }
 
@@ -131,14 +132,14 @@ namespace csi281 {
   // when the CityTemperatureData is created, it will take ownership of the array
   CityTemperatureData *readCity(string cityName, string fileName, int startLine, int endLine) 
   {
-    const int count = (endLine - startLine);
+    const int count = (endLine - startLine + 1);
     CityYear *data = new CityYear[count];
     ifstream file(fileName);
 
     string tempLine;
     int dataIndex = 0;
 
-    for (int i = 0; i < endLine; i++)
+    for (int i = 0; i <= endLine; i++)
     {
       if (i >= startLine) {
         *(data + dataIndex) = readLine(file);
@@ -151,7 +152,7 @@ namespace csi281 {
     }
 
     file.close();
-    CityTemperatureData *tempCityData = new CityTemperatureData(cityName, data, (endLine - startLine));
+    CityTemperatureData *tempCityData = new CityTemperatureData(cityName, data, count);
     return tempCityData;
   }
 }  // namespace csi281
