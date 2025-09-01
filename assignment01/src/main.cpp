@@ -189,8 +189,11 @@ int main(int argc, char *argv[]) {
   // int result = Catch::Session().run( argc, argv );
 
   // draw graphs
+  cout << "Reading NYC" << endl;
   CityTemperatureData* nyc = readCity("NYC", "tempdata.csv", 1, 51);
-  CityTemperatureData* burlington = readCity("Burlington", "tempdata.csv", 52, 102);
+  cout << "Reading Burlington" << endl;
+  CityTemperatureData* burlington = readCity("Burlington", "tempdata.csv", 1, 51);
+  //CityTemperatureData* burlington = readCity("Burlington", "tempdata.csv", 52, 102);
   drawAvgTempChart(*nyc, *burlington);
   drawExtremeDaysChart(*nyc, *burlington);
   delete nyc;

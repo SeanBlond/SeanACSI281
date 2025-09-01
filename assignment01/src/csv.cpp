@@ -74,7 +74,62 @@ namespace csi281 {
   // and the readCell() functions above
   // You'll also want to construct a CityYear from what you have read from the file
   CityYear readLine(ifstream &file) {
-    // YOUR CODE HERE
+    CityYear tempCity;
+
+    string tempString;
+    istringstream cell(tempString);
+
+
+    getline(file, tempString, ',');
+    //cout << "Irrelavant Info: " << tempString << endl; 
+    getline(file, tempString, ',');
+    //cout << "Irrelavant Info: " << tempString << endl; 
+
+    getline(file, tempString, ',');
+    cell.clear();
+    cell.str(tempString);
+    int year = readIntCell(cell);
+    //cout << "Read Year: " << year << endl;
+    tempCity.year = year;
+
+    getline(file, tempString, ',');
+    cell.clear();
+    cell.str(tempString);
+    int below = readIntCell(cell);
+    //cout << "Read Below: " << below << endl;
+    tempCity.numDaysBelow32 = below;
+
+    getline(file, tempString, ',');
+    cell.clear();
+    cell.str(tempString);
+    int above = readIntCell(cell);
+    //cout << "Read Above: " << above << endl;
+    tempCity.numDaysAbove90 = above;
+
+    getline(file, tempString, ',');
+    cell.clear();
+    cell.str(tempString);
+    float average = readFloatCell(cell);
+    //cout << "Read Average: " << average << endl;
+    tempCity.averageTemperature = average;
+
+    getline(file, tempString, ',');
+    cell.clear();
+    cell.str(tempString);
+    float max = readFloatCell(cell);
+    //cout << "Read Max: " << max << endl;
+    tempCity.averageMax = max;
+
+    getline(file, tempString, '\n');
+    cell.clear();
+    cell.str(tempString);
+    float min = readFloatCell(cell);
+    //cout << "Read Min: " << min << endl;
+    tempCity.averageMin = min;
+
+
+    cout << "City Data year " << year << " saved" << endl;
+    return tempCity;
   }
 
   // Read city by looking at the specified lines in the CSV
@@ -86,6 +141,29 @@ namespace csi281 {
   // Construct a CityTemperatureData and return it
   // create an array of CityYear instances to pass to the CityTemperatureData constructor
   // when the CityTemperatureData is created, it will take ownership of the array
-  CityTemperatureData* readCity(string cityName, string fileName, int startLine, int endLine) {
+  CityTemperatureData *readCity(string cityName, string fileName, int startLine, int endLine) 
+  {
+    cout << "Lines: " << startLine << " and " << endLine << endl;
+    const int count = (endLine - startLine);
+    CityYear data [50];
+    ifstream file(fileName);
+
+    string tempLine;
+
+    for (int i = 0; i < endLine; i++)
+    {
+      cout << "Loop " << i << endl;
+      if (i >= startLine)
+        data[i] = readLine(file);
+      else
+      {
+        getline(file, tempLine);
+        cout << "Read Irrelavent line: " << tempLine << endl;
+      }
+    }
+
+    file.close();
+    CityTemperatureData *tempCityData = new CityTemperatureData(cityName, data, (endLine - startLine));
+    return tempCityData;
   }
 }  // namespace csi281
