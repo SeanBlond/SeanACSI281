@@ -45,7 +45,7 @@ namespace csi281
     // Find the right CityYear in the array and return it
     const CityYear CityTemperatureData::operator[](const int year) const
     {
-        return *(_data + (year - 1968));
+        return *(_data + (year - getFirstYear()));
     }
 
     // Get the average (mean) temperature of all time for this city
