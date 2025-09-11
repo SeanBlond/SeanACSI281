@@ -40,66 +40,69 @@ using namespace SVGChart;
 
 // Draw a chart showing the average search times
 // for different numbers of elements in "SearchChart.svg"
-static void drawSearchChart() {
-  PPlot pplot;
-  pplot.mPlotBackground.mTitle = "Number of Elements Versus Time (1000 samples at each N)";
+static void drawSearchChart()
+{
+    PPlot pplot;
+    pplot.mPlotBackground.mTitle = "Number of Elements Versus Time (1000 samples at each N)";
 
-  PlotData *theX1 = new PlotData();
-  PlotData *theY1 = new PlotData();
-  LineDataDrawer *theDataDrawer1 = new LineDataDrawer();
-  theDataDrawer1->mDrawPoint = false;
-  theDataDrawer1->mDrawLine = true;
+    PlotData *theX1 = new PlotData();
+    PlotData *theY1 = new PlotData();
+    LineDataDrawer *theDataDrawer1 = new LineDataDrawer();
+    theDataDrawer1->mDrawPoint = false;
+    theDataDrawer1->mDrawLine = true;
 
-  LegendData *legend1 = new LegendData();  // let us setup the first legend
-  legend1->mName = "Linear Search";
-  legend1->mColor = PColor(200, 0, 100);  // just an rgb value
+    LegendData *legend1 = new LegendData();  // let us setup the first legend
+    legend1->mName = "Linear Search";
+    legend1->mColor = PColor(200, 0, 100);  // just an rgb value
 
-  PlotData *theX2 = new PlotData();
-  PlotData *theY2 = new PlotData();
-  LineDataDrawer *theDataDrawer2 = new LineDataDrawer();
-  theDataDrawer2->mDrawPoint = false;
-  theDataDrawer2->mDrawLine = true;
+    PlotData *theX2 = new PlotData();
+    PlotData *theY2 = new PlotData();
+    LineDataDrawer *theDataDrawer2 = new LineDataDrawer();
+    theDataDrawer2->mDrawPoint = false;
+    theDataDrawer2->mDrawLine = true;
 
-  LegendData *legend2 = new LegendData();  // let us setup the first legend
-  legend2->mName = "Binary Search (w/ Sort Amortized)";
-  legend2->mColor = PColor(100, 20, 220);  // just an rgb value
+    LegendData *legend2 = new LegendData();  // let us setup the first legend
+    legend2->mName = "Binary Search (w/ Sort Amortized)";
+    legend2->mColor = PColor(100, 20, 220);  // just an rgb value
 
-  cout << "Generating times for large arrays; this may take a while..." << endl;
+    cout << "Generating times for large arrays; this may take a while..." << endl;
 
-  const int NUM_TESTS = 1000;
-  for (int i = 100; i <= 10000; i *= 2) {
-    auto speeds = arraySearchSpeed(i, NUM_TESTS);
-    theX1->push_back(i);
-    theY1->push_back(speeds.first.count());
-    theX2->push_back(i);
-    theY2->push_back(speeds.second.count());
-  }
+    const int NUM_TESTS = 1000;
+    for (int i = 100; i <= 10000; i *= 2)
+    {
+        auto speeds = arraySearchSpeed(i, NUM_TESTS);
+        theX1->push_back(i);
+        theY1->push_back(speeds.first.count());
+        theX2->push_back(i);
+        theY2->push_back(speeds.second.count());
+    }
 
-  pplot.mPlotDataContainer.AddXYPlot(theX1, theY1, legend1, theDataDrawer1);
-  pplot.mPlotDataContainer.AddXYPlot(theX2, theY2, legend2, theDataDrawer2);
+    pplot.mPlotDataContainer.AddXYPlot(theX1, theY1, legend1, theDataDrawer1);
+    pplot.mPlotDataContainer.AddXYPlot(theX2, theY2, legend2, theDataDrawer2);
 
-  pplot.mMargins.mLeft = 100;
-  pplot.mMargins.mTop = 50;
-  pplot.mMargins.mRight = 50;
-  pplot.mMargins.mBottom = 50;
-  pplot.mGridInfo.mXGridOn = true;
-  pplot.mGridInfo.mYGridOn = true;
-  pplot.mYAxisSetup.mCrossOrigin = false;
-  pplot.mXAxisSetup.mCrossOrigin = true;
-  pplot.mXAxisSetup.mLabel = "N";
-  pplot.mYAxisSetup.mAutoScaleMin = false;
-  pplot.mYAxisSetup.mAutoScaleMax = true;
-  pplot.mYAxisSetup.mMin = 0;
-  pplot.mXAxisSetup.mMin = 0;
-  // pplot.mYAxisSetup.mMax = 100;
-  pplot.mYAxisSetup.mLabel = "Time (nanoseconds)";
-  SVGPainter painter(800, 600);
-  pplot.Draw(painter);
-  painter.writeFile("SearchChart.svg");
+    pplot.mMargins.mLeft = 100;
+    pplot.mMargins.mTop = 50;
+    pplot.mMargins.mRight = 50;
+    pplot.mMargins.mBottom = 50;
+    pplot.mGridInfo.mXGridOn = true;
+    pplot.mGridInfo.mYGridOn = true;
+    pplot.mYAxisSetup.mCrossOrigin = false;
+    pplot.mXAxisSetup.mCrossOrigin = true;
+    pplot.mXAxisSetup.mLabel = "N";
+    pplot.mYAxisSetup.mAutoScaleMin = false;
+    pplot.mYAxisSetup.mAutoScaleMax = true;
+    pplot.mYAxisSetup.mMin = 0;
+    pplot.mXAxisSetup.mMin = 0;
+    // pplot.mYAxisSetup.mMax = 100;
+    pplot.mYAxisSetup.mLabel = "Time (nanoseconds)";
+    SVGPainter painter(800, 600);
+    pplot.Draw(painter);
+    painter.writeFile("SearchChart.svg");
 }
 
 // Test all code and draw charts.
-int main(int argc, char *argv[]) {
-  // draw chart
-  drawSearchChart();
+int main(int argc, char *argv[])
+{
+    // draw chart
+    drawSearchChart();
 }

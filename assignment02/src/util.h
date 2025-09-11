@@ -36,9 +36,10 @@
 using namespace std;
 using namespace std::chrono;
 
-namespace csi281 {
-  int *randomIntArray(const int length, const int min, const int max);
-  pair<nanoseconds, nanoseconds> arraySearchSpeed(const int length, const int numTests);
+namespace csi281
+{
+    int *randomIntArray(const int length, const int min, const int max);
+    pair<nanoseconds, nanoseconds> arraySearchSpeed(const int length, const int numTests);
 }  // namespace csi281
 
 #endif /* util_hpp */

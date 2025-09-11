@@ -35,49 +35,90 @@
 
 using namespace std;
 
-namespace csi281 {
+namespace csi281
+{
 
-  // Returns a new int array of *length* and filled
-  // with numbers between *min* and *max*
-  // Suggest using the facilities in STL <random>
-  int *randomIntArray(const int length, const int min, const int max) {
-    // YOUR CODE HERE
-  }
+    // Returns a new int array of *length* and filled
+    // with numbers between *min* and *max*
+    // Suggest using the facilities in STL <random>
+    int *randomIntArray(const int length, const int min, const int max)
+    {
+        // Setting Up Random Number Generator
+        random_device rd;
+        mt19937 generator(rd());
+        uniform_int_distribution<int> distrubition(min, max);
 
-  // Finds the speed of linear versus binary search
-  // in a random int array of *length* size
-  // by running *numTests* and averaging them
-  // Returns a pair indicating the average time it took
-  // to do linear search and binary search in nanoseconds
-  // Linear search should be first in the pair, and binary search
-  // should be second
-  //
-  // Suggest using the facilities in STL <chrono>
-  // For example, you can start a timer using
-  // using namespace std::chrono;
-  // auto start = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
-  // and stop a timer using
-  // auto end = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
-  // start, end will be results in nanoseconds
-  pair<nanoseconds, nanoseconds> arraySearchSpeed(const int length, const int numTests) {
-    int *testArray = randomIntArray(length, 0, length);
-    int *testKeys = randomIntArray(numTests, 0, length);
+        // Creating Array of random numbers
+        int *numArray = new int[length];
+        for (int i = 0; i < length; i++)
+        {
+            numArray[i] = distrubition(generator);
+        }
 
-    using namespace std::chrono;
+        int *beginning = (numArray);
+        int *ending = (numArray + length);
+        std::sort(beginning, ending);
 
-    // Do numTests linear searches and find the average time
-    // Put the result in a variable linearSearchSpeed
+        return numArray;
+    }
 
-    // YOUR CODE HERE
+    // Finds the speed of linear versus binary search
+    // in a random int array of *length* size
+    // by running *numTests* and averaging them
+    // Returns a pair indicating the average time it took
+    // to do linear search and binary search in nanoseconds
+    // Linear search should be first in the pair, and binary search
+    // should be second
+    //
+    // Suggest using the facilities in STL <chrono>
+    // For example, you can start a timer using
+    // using namespace std::chrono;
+    // auto start = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
+    // and stop a timer using
+    // auto end = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
+    // start, end will be results in nanoseconds
+    pair<nanoseconds, nanoseconds> arraySearchSpeed(const int length, const int numTests)
+    {
+        int *testArray = randomIntArray(length, 0, length);
+        int *testKeys = randomIntArray(numTests, 0, length);
 
-    // Do numTests binary searches and find the average time
-    // Put the result in a variable binarySearchSpeed
+        using namespace std::chrono;
 
-    // YOUR CODE HERE
+        // Do numTests linear searches and find the average time
+        // Put the result in a variable linearSearchSpeed
 
-    delete testArray;
-    delete testKeys;
+        // YOUR CODE HERE
+        auto startLinear = duration_cast<nanoseconds>(system_clock::now().time_since_epoch()).count();
+        for (int i = 0; i < numTests; i++)
+        {
+            // Performing the test
+            //cout << "Test #" << i << endl;
+            int location = binarySearch(testArray, length, testKeys[i]);
+            //cout << "Key Location: " << location << endl;
+        }
+        auto endLinear = duration_cast<nanoseconds>(system_clock::now().time_since_epoch()).count();
+        auto linearSearchSpeed = (endLinear - startLinear);
+        cout << "Total Linear Time: " << linearSearchSpeed << endl;
 
-    return pair<nanoseconds, nanoseconds>(linearSearchSpeed, binarySearchSpeed);
-  }
+        // Do numTests binary searches and find the average time
+        // Put the result in a variable binarySearchSpeed
+
+        // YOUR CODE HERE
+        auto startBinary = duration_cast<nanoseconds>(system_clock::now().time_since_epoch()).count();
+        for (int i = 0; i < numTests; i++)
+        {
+            // Performing the test
+            //cout << "Test #" << i << endl;
+            int location = binarySearch(testArray, length, testKeys[i]);
+            //cout << "Key Location: " << location << endl;
+        }
+        auto endBinary = duration_cast<nanoseconds>(system_clock::now().time_since_epoch()).count();
+        auto binarySearchSpeed = (endBinary - startBinary);
+        cout << "Total Binary Time: " << binarySearchSpeed << endl;
+
+        delete testArray;
+        delete testKeys;
+
+        return pair<nanoseconds, nanoseconds>(linearSearchSpeed, binarySearchSpeed);
+    }
 }  // namespace csi281

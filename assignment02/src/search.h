@@ -31,19 +31,52 @@
 
 #include "MemoryLeakDetector.h"
 
-namespace csi281 {
+namespace csi281
+{
 
-  // Returns the first location of the found key
-  // or -1 if the key is never found
-  template <typename T> int linearSearch(T array[], const int length, const T key) {
-    // YOUR CODE HERE
-  }
+    // Returns the first location of the found key
+    // or -1 if the key is never found
+    template <typename T> int linearSearch(T array[], const int length, const T key)
+    {
+        for (int i = 0; i < length; i++)
+        {
+            if (array[i] == key) return i;
+        }
 
-  // Returns the first location of the found key
-  // or -1 if the key is never found; assumes a sorted array
-  template <typename T> int binarySearch(T array[], const int length, const T key) {
-    // YOUR CODE HERE
-  }
+        return -1;
+    }
+
+    // Returns the first location of the found key
+    // or -1 if the key is never found; assumes a sorted array
+    template <typename T> int binarySearch(T array[], const int length, const T key)
+    {
+        int lowEnd = 0;
+        int highEnd = length - 1;
+
+        int count = log2(length) + 1;
+        while (lowEnd <= highEnd && count >= 0)
+        {
+            // Changing Search Location
+            int middle = lowEnd + (highEnd - lowEnd) / 2;
+
+
+            if (array[middle] == key)
+            {
+                return middle;
+            }
+            else if (array[middle] < key)
+            {
+                middle = lowEnd + 1;
+            }
+            else if (array[middle] > key)
+            {
+                middle = lowEnd - 1;
+            }
+
+            count--;
+        }     
+        return -1;
+    }
 }  // namespace csi281
 
 #endif /* search_hpp */
