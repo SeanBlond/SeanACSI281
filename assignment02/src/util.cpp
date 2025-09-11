@@ -86,34 +86,36 @@ namespace csi281
 
         // Do numTests linear searches and find the average time
         // Put the result in a variable linearSearchSpeed
-
         // YOUR CODE HERE
+
+        // Performing the Linear Test
         auto startLinear = duration_cast<nanoseconds>(system_clock::now().time_since_epoch()).count();
         for (int i = 0; i < numTests; i++)
         {
-            // Performing the test
-            //cout << "Test #" << i << endl;
-            int location = binarySearch(testArray, length, testKeys[i]);
-            //cout << "Key Location: " << location << endl;
+            int location = linearSearch(testArray, length, testKeys[i]);
         }
         auto endLinear = duration_cast<nanoseconds>(system_clock::now().time_since_epoch()).count();
-        auto linearSearchSpeed = (endLinear - startLinear);
+
+        // Storing Times
+        auto linearSearchSpeed = (endLinear - startLinear) / numTests;
         cout << "Total Linear Time: " << linearSearchSpeed << endl;
+
+
 
         // Do numTests binary searches and find the average time
         // Put the result in a variable binarySearchSpeed
-
         // YOUR CODE HERE
+        
+        // Performing the Binary Test
         auto startBinary = duration_cast<nanoseconds>(system_clock::now().time_since_epoch()).count();
         for (int i = 0; i < numTests; i++)
         {
-            // Performing the test
-            //cout << "Test #" << i << endl;
             int location = binarySearch(testArray, length, testKeys[i]);
-            //cout << "Key Location: " << location << endl;
         }
         auto endBinary = duration_cast<nanoseconds>(system_clock::now().time_since_epoch()).count();
-        auto binarySearchSpeed = (endBinary - startBinary);
+
+        // Storing Times
+        auto binarySearchSpeed = (endBinary - startBinary) / numTests;
         cout << "Total Binary Time: " << binarySearchSpeed << endl;
 
         delete testArray;

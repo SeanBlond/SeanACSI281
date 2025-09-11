@@ -38,9 +38,10 @@ namespace csi281
     // or -1 if the key is never found
     template <typename T> int linearSearch(T array[], const int length, const T key)
     {
-        for (int i = 0; i < length; i++)
+        for (size_t i = 0; i < length; i++)
         {
-            if (array[i] == key) return i;
+            if (array[i] == key) 
+                return i;
         }
 
         return -1;
