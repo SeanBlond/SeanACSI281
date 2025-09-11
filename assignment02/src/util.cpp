@@ -55,6 +55,7 @@ namespace csi281
             numArray[i] = distrubition(generator);
         }
 
+        // Sorting the Random Numbers
         int *beginning = (numArray);
         int *ending = (numArray + length);
         std::sort(beginning, ending);

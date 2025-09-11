@@ -60,18 +60,17 @@ namespace csi281
             // Changing Search Location
             int middle = lowEnd + (highEnd - lowEnd) / 2;
 
-
             if (array[middle] == key)
             {
                 return middle;
             }
             else if (array[middle] < key)
             {
-                middle = lowEnd + 1;
+                lowEnd = middle + 1;
             }
             else if (array[middle] > key)
             {
-                middle = lowEnd - 1;
+                highEnd = middle - 1;
             }
 
             count--;
