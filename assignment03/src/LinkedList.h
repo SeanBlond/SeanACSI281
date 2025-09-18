@@ -88,6 +88,13 @@ namespace csi281
         void insertAtBeginning(const T &item)
         {
             // YOUR CODE HERE
+            if (head == nullptr)
+            {
+                head = new Node(item);
+                tail = head;
+                count++;
+                return;
+            }
             Node *oldHead = head;
             head = new Node(item);
             head->next = oldHead;
