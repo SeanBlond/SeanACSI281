@@ -29,7 +29,7 @@
 #define dynamicarray_hpp
 
 #include <algorithm>  // for copy(), min(), move_backward
-                      // for assert()
+#include <assert.h>   // for assert()
 
 #include "Collection.h"
 #include "MemoryLeakDetector.h"
@@ -38,111 +38,164 @@
 
 using namespace std;
 
-namespace csi281 {
-  template <typename T> class DynamicArray : public Collection<T> {
-  public:
-    // Initialize the dynamic array with a starting capacity
-    DynamicArray(int cap = DEFAULT_CAPACITY) {
-      capacity = cap;
-      backingStore = new T[capacity];
-    }
+namespace csi281
+{
+    template <typename T> class DynamicArray : public Collection<T>
+    {
+      public:
+        // Initialize the dynamic array with a starting capacity
+        DynamicArray(int cap = DEFAULT_CAPACITY)
+        {
+            capacity = cap;
+            backingStore = new T[capacity];
+        }
 
-    // Erase the dynamic array
-    ~DynamicArray() { delete[] backingStore; }
+        // Erase the dynamic array
+        ~DynamicArray() { delete[] backingStore; }
 
-    // Find the index of a particular item
-    // Return -1 if it is not found>
-    int find(const T &item) {
-      // YOUR CODE HERE
-    }
+        // Find the index of a particular item
+        // Return -1 if it is not found>
+        int find(const T &item)
+        {
+            // YOUR CODE HERE
+            for (int i = 0; i < count; i++)
+            {
+                if (backingStore[i] == item) return i;
+            }
+            return -1;
+        }
 
-    // Get the item at a particular index
-    T &get(int index) {
-      // YOUR CODE HERE
-    }
+        // Get the item at a particular index
+        T &get(int index)
+        {
+            // YOUR CODE HERE
+            return backingStore[index];
+        }
 
-    // Insert at the beginning of the collection
-    // Using setCapacity() if we are too small before
-    // inserting
-    // Hint: May want to use moveDownFrom()
-    void insertAtBeginning(const T &item) {
-      // YOUR CODE HERE
-    }
+        // Insert at the beginning of the collection
+        // Using setCapacity() if we are too small before
+        // inserting
+        // Hint: May want to use moveDownFrom()
+        void insertAtBeginning(const T &item)
+        {
+            // YOUR CODE HERE
+            if (count >= capacity)
+            {
+                setCapacity(count * 2);
+            }
+            moveDownFrom(0);
+            backingStore[0] = item;
+            count++;
+        }
 
-    // Insert at the end of the collection
-    // Using setCapacity() if we are too small before
-    // inserting
-    void insertAtEnd(const T &item) {
-      // YOUR CODE HERE
-    }
+        // Insert at the end of the collection
+        // Using setCapacity() if we are too small before
+        // inserting
+        void insertAtEnd(const T &item)
+        {
+            // YOUR CODE HERE
+            if (count >= capacity)
+            {
+                setCapacity(count * 2);
+            }
+            backingStore[count] = item;
+            count++;
+        }
 
-    // Insert at a specific index
-    // Using setCapacity() if we are too small before
-    // inserting
-    // Hint: May want to use moveDownFrom()
-    void insert(const T &item, int index) {
-      // YOUR CODE HERE
-    }
+        // Insert at a specific index
+        // Using setCapacity() if we are too small before
+        // inserting
+        // Hint: May want to use moveDownFrom()
+        void insert(const T &item, int index)
+        {
+            // YOUR CODE HERE
+            if (count >= capacity)
+            {
+                setCapacity(count * 2);
+            }
+            moveDownFrom(index);
+            backingStore[0] = item;
+            count++;
+        }
 
-    // Remove the item at the beginning of the collection
-    void removeAtBeginning() {
-      // YOUR CODE HERE
-    }
+        // Remove the item at the beginning of the collection
+        void removeAtBeginning()
+        {
+            // YOUR CODE HERE
+            for (int i = 0; i < count - 1; i++)
+            {
+                backingStore[i] = backingStore[i + 1];
+            }
+            count--;
 
-    // Remove the item at the end of the collection
-    // Hint: This might be very simple.
-    void removeAtEnd() {
-      // YOUR CODE HERE
-    }
+        }
 
-    // Remove the item at a specific index
-    // Hint: Can be done by a combination of moving items
-    // down and removing the starting beginning element
-    void removeAt(int index) {
-      // YOUR CODE HERE
-    }
+        // Remove the item at the end of the collection
+        // Hint: This might be very simple.
+        void removeAtEnd()
+        {
+            // YOUR CODE HERE
+            count--;
+        }
 
-    // Change the capacity of the dynamic array
-    // If it becomes less than count, just discard excess
-    void setCapacity(int cap) {
-      assert(cap >= 0);  // can't have negative capacity
-      // don't do anything if we're already correct
-      if (cap == capacity) {
-        return;
-      }
+        // Remove the item at a specific index
+        // Hint: Can be done by a combination of moving items
+        // down and removing the starting beginning element
+        void removeAt(int index)
+        {
+            // YOUR CODE HERE
+            for (int i = index; i < count - 1; i++)
+            {
+                backingStore[i] = backingStore[i + 1];
+            }
+            count--;
+        }
 
-      int numberToCopy = min(cap, count);
+        // Change the capacity of the dynamic array
+        // If it becomes less than count, just discard excess
+        void setCapacity(int cap)
+        {
+            assert(cap >= 0);  // can't have negative capacity
+            // don't do anything if we're already correct
+            if (cap == capacity)
+            {
+                return;
+            }
 
-      T *destination = new T[cap];
+            int numberToCopy = min(cap, count);
 
-      copy(backingStore, backingStore + numberToCopy, destination);
-      delete[] backingStore;
-      backingStore = destination;
-      capacity = cap;
-      if (capacity < count) {
-        count = capacity;
-      }
-    }
+            T *destination = new T[cap];
 
-    // Return the current capacity
-    int getCapacity() { return capacity; }
+            copy(backingStore, backingStore + numberToCopy, destination);
+            delete[] backingStore;
+            backingStore = destination;
+            capacity = cap;
+            if (capacity < count)
+            {
+                count = capacity;
+            }
+        }
 
-  protected:
-    using Collection<T>::count;
+        // Return the current capacity
+        int getCapacity() { return capacity; }
 
-  private:
-    int capacity;
-    int growthFactor = 2;
-    T *backingStore;
+      protected:
+        using Collection<T>::count;
 
-    // Shift all of the items in backingStore starting at
-    // index down by 1 place
-    // Make sure you have capacity available to do this before
-    // running this method
-    void moveDownFrom(int index) {
-      move_backward(backingStore + index, backingStore + count, backingStore + count + 1);
-    }
-  };
+      private:
+        int capacity;
+        int growthFactor = 2;
+        T *backingStore;
+
+        // Shift all of the items in backingStore starting at
+        // index down by 1 place
+        // Make sure you have capacity available to do this before
+        // running this method
+        void moveDownFrom(int index)
+        {
+            move_backward(backingStore + index, backingStore + count, backingStore + count + 1);
+        }
+    };
 
 }  // namespace csi281
 

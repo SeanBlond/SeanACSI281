@@ -30,132 +30,195 @@
 
 #include "Collection.h"
 #include "MemoryLeakDetector.h"
+#include <assert.h>
 
 using namespace std;
 
-namespace csi281 {
-  template <typename T> class LinkedList : public Collection<T> {
-    class Node;  // forward declaration
-  public:
-    // Erase all the nodes
-    ~LinkedList() {
-      Node *current = head;
-      while (current != nullptr) {
-        Node *last = current;
-        current = current->next;
-        delete last;
-      }
-      head = nullptr;
-      tail = nullptr;
-      count = 0;
-    }
-
-    // Find the index of a particular item
-    // Return -1 if it is not found
-    int find(const T &item) {
-      // YOUR CODE HERE
-    }
-
-    // Get the item at a particular index
-    T &get(int index) {
-      assert(index < count);  // can't insert off end
-      assert(index >= 0);     // no negative indices
-                              // YOUR CODE HERE
-    }
-
-    // Insert at the beginning of the collection
-    void insertAtBeginning(const T &item) {
-      // YOUR CODE HERE
-    }
-
-    // Insert at the end of the collection
-    void insertAtEnd(const T &item) {
-      // YOUR CODE HERE
-    }
-
-    // Insert at a specific index
-    void insert(const T &item, int index) {
-      assert(index <= count);  // can't insert off end
-      assert(index >= 0);      // no negative indices
-      if (index == 0) {
-        insertAtBeginning(item);
-        return;
-      }
-      if (index == count) {
-        insertAtEnd(item);
-        return;
-      }
-      int location = 0;
-      for (Node *current = head; current != nullptr; current = current->next) {
-        if (location == (index - 1)) {
-          Node *after = current->next;
-          Node *thing = new Node(item);
-          current->next = thing;
-          thing->next = after;
-          count++;
-          return;
+namespace csi281
+{
+    template <typename T> class LinkedList : public Collection<T>
+    {
+        class Node;  // forward declaration
+      public:
+        // Erase all the nodes
+        ~LinkedList()
+        {
+            Node *current = head;
+            while (current != nullptr)
+            {
+                Node *last = current;
+                current = current->next;
+                delete last;
+            }
+            head = nullptr;
+            tail = nullptr;
+            count = 0;
         }
-        location++;
-      }
-    }
 
-    // Remove the item at the beginning of the collection
-    void removeAtBeginning() {
-      assert(count > 0);
-      // YOUR CODE HERE
-    }
+        // Find the index of a particular item
+        // Return -1 if it is not found
+        int find(const T &item)
+        { 
+            Node *current = head;
+            for (int i = 0; i < count; i++)
+            {
+                if (current->data == item) return i;
 
-    // Remove the item at the end of the collection
-    void removeAtEnd() {
-      assert(count > 0);
-      // YOUR CODE HERE
-    }
-
-    // Remove the item at a specific index
-    void removeAt(int index) {
-      assert(index >= 0);
-      assert(index < count);
-      assert(count > 0);
-      if (index == 0) {
-        removeAtBeginning();
-        return;
-      }
-      if (index == (count - 1)) {
-        removeAtEnd();
-        return;
-      }
-
-      int location = 0;
-      for (Node *current = head; current != nullptr; current = current->next) {
-        if (location == (index - 1)) {
-          Node *after = current->next->next;
-          delete (current->next);
-          current->next = after;
-          count--;
-          return;
+                current = current->next;
+            }
+            return -1;
         }
-        location++;
-      }
-    }
 
-  protected:
-    using Collection<T>::count;
+        // Get the item at a particular index
+        T &get(int index)
+        {
+            assert(index < count);  // can't insert off end
+            assert(index >= 0);     // no negative indices
+            // YOUR CODE HERE
+            
+            Node *current = head;
+            for (int i = 0; i < index; i++)
+            {
+                current = current->next;
+            }
+            return current->data;
+        }
 
-  private:
-    Node *head = nullptr;
-    Node *tail = nullptr;
+        // Insert at the beginning of the collection
+        void insertAtBeginning(const T &item)
+        {
+            // YOUR CODE HERE
+            Node *oldHead = head;
+            head = new Node(item);
+            head->next = oldHead;
+            count++;
+        }
 
-    class Node {
-      friend class LinkedList;
+        // Insert at the end of the collection
+        void insertAtEnd(const T &item)
+        {
+            // YOUR CODE HERE
+            if (tail == nullptr)
+            {
+                insertAtBeginning(item);
+                return;
+            }
 
-    public:
-      Node(const T &thing) : data(thing), next(nullptr){};
+            auto newTail = new Node(item);
+            tail->next = newTail;
+            tail = newTail;  
+            count++;
+        }
 
-    private:
-      T data;
-      Node *next;
+        // Insert at a specific index
+        void insert(const T &item, int index)
+        {
+            assert(index <= count);  // can't insert off end
+            assert(index >= 0);      // no negative indices
+            if (index == 0)
+            {
+                insertAtBeginning(item);
+                return;
+            }
+            if (index == count)
+            {
+                insertAtEnd(item);
+                return;
+            }
+            int location = 0;
+            for (Node *current = head; current != nullptr; current = current->next)
+            {
+                if (location == (index - 1))
+                {
+                    Node *after = current->next;
+                    Node *thing = new Node(item);
+                    current->next = thing;
+                    thing->next = after;
+                    count++;
+                    return;
+                }
+                location++;
+            }
+        }
+
+        // Remove the item at the beginning of the collection
+        void removeAtBeginning()
+        {
+            assert(count > 0);
+            // YOUR CODE HERE
+            auto newHead = head->next;
+            delete head;
+            head = newHead;
+            count--;
+        }
+
+        // Remove the item at the end of the collection
+        void removeAtEnd()
+        {
+            assert(count > 0);
+            // YOUR CODE HERE
+            Node *current = head;
+            while (current->next->next != nullptr)
+            {
+                current = current->next;
+            }
+            delete tail;
+            current->next = nullptr;
+            tail = current;
+            count--;
+        }
+
+        // Remove the item at a specific index
+        void removeAt(int index)
+        {
+            assert(index >= 0);
+            assert(index < count);
+            assert(count > 0);
+            if (index == 0)
+            {
+                removeAtBeginning();
+                return;
+            }
+            if (index == (count - 1))
+            {
+                removeAtEnd();
+                return;
+            }
+
+            int location = 0;
+            for (Node *current = head; current != nullptr; current = current->next)
+            {
+                if (location == (index - 1))
+                {
+                    Node *after = current->next->next;
+                    delete (current->next);
+                    current->next = after;
+                    count--;
+                    return;
+                }
+                location++;
+            }
+        }
+
+      protected:
+        using Collection<T>::count;
+
+      private:
+        Node *head = nullptr;
+        Node *tail = nullptr;
+
+        class Node
+        {
+            friend class LinkedList;
+
+          public:
+            Node(const T &thing) : data(thing), next(nullptr){};
+
+          private:
+            T data;
+            Node *next;
+        };
     };
-  };
 }  // namespace csi281
 
 #endif /* linkedlist_hpp */

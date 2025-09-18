@@ -30,49 +30,55 @@
 
 #include "MemoryLeakDetector.h"
 
-namespace csi281 {
+namespace csi281
+{
 
-  template <typename T> class Collection {
-  public:
-    // Find the index of a particular item
-    // Return -1 if it is not found
-    virtual int find(const T &item) = 0;
-    // Check if the collection contains item
-    bool contains(const T &item) {
-      if (find(item) != -1) {
-        return true;
-      }
-      return false;
-    }
-    // Get the item at a particular index
-    virtual T &get(int index) = 0;
-    // Get an item at a particular index
-    T &operator[](int index) { return get(index); }
-    // Insert at the beginning of the collection
-    virtual void insertAtBeginning(const T &item) = 0;
-    // Insert at the end of the collection
-    virtual void insertAtEnd(const T &item) = 0;
-    // Insert at a specific index
-    virtual void insert(const T &item, int index) = 0;
-    // Remove the item at the beginning of the collection
-    virtual void removeAtBeginning() = 0;
-    // Remove the item at the end of the collection
-    virtual void removeAtEnd() = 0;
-    // Remove the item at a specific index
-    virtual void removeAt(int index) = 0;
-    // Remove a specific item
-    void remove(const T &item) {
-      int location = find(item);
-      if (location != -1) {
-        removeAt(location);
-      }
-    }
-    // Return the number of items in the collection
-    int getCount() { return count; }
+    template <typename T> class Collection
+    {
+      public:
+        // Find the index of a particular item
+        // Return -1 if it is not found
+        virtual int find(const T &item) = 0;
+        // Check if the collection contains item
+        bool contains(const T &item)
+        {
+            if (find(item) != -1)
+            {
+                return true;
+            }
+            return false;
+        }
+        // Get the item at a particular index
+        virtual T &get(int index) = 0;
+        // Get an item at a particular index
+        T &operator[](int index) { return get(index); }
+        // Insert at the beginning of the collection
+        virtual void insertAtBeginning(const T &item) = 0;
+        // Insert at the end of the collection
+        virtual void insertAtEnd(const T &item) = 0;
+        // Insert at a specific index
+        virtual void insert(const T &item, int index) = 0;
+        // Remove the item at the beginning of the collection
+        virtual void removeAtBeginning() = 0;
+        // Remove the item at the end of the collection
+        virtual void removeAtEnd() = 0;
+        // Remove the item at a specific index
+        virtual void removeAt(int index) = 0;
+        // Remove a specific item
+        void remove(const T &item)
+        {
+            int location = find(item);
+            if (location != -1)
+            {
+                removeAt(location);
+            }
+        }
+        // Return the number of items in the collection
+        int getCount() { return count; }
 
-  protected:
-    int count = 0;
-  };
+      protected:
+        int count = 0;
+    };
 }  // namespace csi281
 
 #endif /* collections_hpp */
