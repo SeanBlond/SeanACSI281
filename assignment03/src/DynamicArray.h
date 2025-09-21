@@ -114,7 +114,7 @@ namespace csi281
                 setCapacity(count * 2);
             }
             moveDownFrom(index);
-            backingStore[0] = item;
+            backingStore[index] = item;
             count++;
         }
 
