@@ -83,7 +83,16 @@ namespace csi281
     // using the insertion sort algorithm
     template <typename T> void insertionSort(T array[], const int length)
     {
-        // YOUR CODE HERE
+        for (int i = 1; i < length; i++)
+        {
+            int index = i - 1;
+
+            while (index >= 0 && array[i] < array[index])
+            {
+                std::swap(array[i], array[index]);
+                index--;
+            }
+        }
     }
 }  // namespace csi281
 
