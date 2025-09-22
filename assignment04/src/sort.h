@@ -41,7 +41,7 @@ namespace csi281
     // using the bubble sort algorithm
     template <typename T> void bubbleSort(T array[], const int length)
     {
-        /*bool sorted = false;
+        bool sorted = false;
         bool swapped = false;
         int index = 0;
         while (!sorted)
@@ -55,7 +55,7 @@ namespace csi281
             if (index == (length - 1) && !swapped) sorted = true;
 
             index++;
-        }*/
+        }
 
         for (int i = 0; i < length; i++)
         {  // n passes
