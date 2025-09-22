@@ -54,7 +54,7 @@ namespace csi281
 
             if (index == (length - 1) && !swapped) sorted = true;
 
-            index++
+            index++;
         }
     }
 
@@ -62,7 +62,7 @@ namespace csi281
     // using the selection sort algorithm
     template <typename T> void selectionSort(T array[], const int length)
     {
-        int lowestIndex = array[0];
+        int lowestIndex = 0;
         int index = 0;
         bool sorted = false;
 
