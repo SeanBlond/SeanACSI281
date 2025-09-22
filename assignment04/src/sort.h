@@ -46,7 +46,7 @@ namespace csi281
         int index = 0;
         while (!sorted)
         {
-            if (index < (length - 1) && array[index] > array[index + 1])
+            if (index > (length - 1) && array[index] > array[index + 1])
             {
                     swapped = true;
                     std::swap(array[index], array[index + 1]);
