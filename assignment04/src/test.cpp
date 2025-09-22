@@ -44,260 +44,281 @@ using doctest::Approx;
 using namespace std;
 using namespace csi281;
 
-template <typename T, int length> void printArray(T (&a)[length]) {
-  copy(begin(a), end(a), ostream_iterator<T>(cout, " "));
-  cout << endl;
+template <typename T, int length> void printArray(T (&a)[length])
+{
+    copy(begin(a), end(a), ostream_iterator<T>(cout, " "));
+    cout << endl;
 }
 
-TEST_CASE("Bubble Sort", "[Bubble]") {
-  SECTION("int Test") {
-    // setup
-    const int length = 11;
-    int sampleIntArray1[length] = {23, -3, -2, 4, 11, 4, 7, 8, 0, 0, -3};
-    int sampleIntArray2[length];
-    copy(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2));
-    // sort
-    bubbleSort(sampleIntArray1, length);
-    sort(begin(sampleIntArray2), end(sampleIntArray2));
-    // print arrays
-    cout << endl;
-    cout << "bubbleSort" << endl;
-    printArray(sampleIntArray1);
-    cout << "std::sort" << endl;
-    printArray(sampleIntArray2);
-    // check they are the same
-    REQUIRE(equal(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2)));
-  }
+TEST_CASE("Bubble Sort", "[Bubble]")
+{
+    SECTION("int Test")
+    {
+        // setup
+        const int length = 11;
+        int sampleIntArray1[length] = {23, -3, -2, 4, 11, 4, 7, 8, 0, 0, -3};
+        int sampleIntArray2[length];
+        copy(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2));
+        // sort
+        bubbleSort(sampleIntArray1, length);
+        sort(begin(sampleIntArray2), end(sampleIntArray2));
+        // print arrays
+        cout << endl;
+        cout << "bubbleSort" << endl;
+        printArray(sampleIntArray1);
+        cout << "std::sort" << endl;
+        printArray(sampleIntArray2);
+        // check they are the same
+        REQUIRE(equal(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2)));
+    }
 
-  SECTION("Random int Test") {
-    // setup
-    const int length = 100;
-    int sampleIntArray1[length];
-    int sampleIntArray2[length];
+    SECTION("Random int Test")
+    {
+        // setup
+        const int length = 100;
+        int sampleIntArray1[length];
+        int sampleIntArray2[length];
+        random_device rd;
+        mt19937 rng(rd());
+        uniform_int_distribution<int> uni(-length, length);
+        for (int i = 0; i < length; i++)
+        {
+            int num = uni(rng);
+            sampleIntArray1[i] = num;
+            sampleIntArray2[i] = num;
+        }
+        // sort
+        bubbleSort(sampleIntArray1, length);
+        sort(begin(sampleIntArray2), end(sampleIntArray2));
+        // print arrays
+        cout << endl;
+        cout << "bubbleSort" << endl;
+        printArray(sampleIntArray1);
+        cout << "std::sort" << endl;
+        printArray(sampleIntArray2);
+        // check they are the same
+        REQUIRE(equal(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2)));
+    }
+
+    SECTION("string Test")
+    {
+        // setup
+        const int length = 8;
+        string sampleStringArray1[length]
+            = {"dog", "man", "jen", "aaa", "frisbee", "$%", "  9  ", "dog"};
+        string sampleStringArray2[length];
+        copy(begin(sampleStringArray1), end(sampleStringArray1), begin(sampleStringArray2));
+        // sort
+        bubbleSort(sampleStringArray1, length);
+        sort(begin(sampleStringArray2), end(sampleStringArray2));
+        // print arrays
+        cout << endl;
+        cout << "bubbleSort" << endl;
+        printArray(sampleStringArray1);
+        cout << "std::sort" << endl;
+        printArray(sampleStringArray2);
+        // check they are the same
+        REQUIRE(
+            equal(begin(sampleStringArray1), end(sampleStringArray1), begin(sampleStringArray2)));
+    }
+}
+
+TEST_CASE("Selection Sort", "[Selection]")
+{
+    SECTION("int Test")
+    {
+        // setup
+        const int length = 11;
+        int sampleIntArray1[length] = {23, -3, -2, 4, 11, 4, 7, 8, 0, 0, -3};
+        int sampleIntArray2[length];
+        copy(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2));
+        // sort
+        selectionSort(sampleIntArray1, length);
+        sort(begin(sampleIntArray2), end(sampleIntArray2));
+        // print arrays
+        cout << endl;
+        cout << "selectionSort" << endl;
+        printArray(sampleIntArray1);
+        cout << "std::sort" << endl;
+        printArray(sampleIntArray2);
+        // check they are the same
+        REQUIRE(equal(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2)));
+    }
+
+    SECTION("Random int Test")
+    {
+        // setup
+        const int length = 100;
+        int sampleIntArray1[length];
+        int sampleIntArray2[length];
+        random_device rd;
+        mt19937 rng(rd());
+        uniform_int_distribution<int> uni(-length, length);
+        for (int i = 0; i < length; i++)
+        {
+            int num = uni(rng);
+            sampleIntArray1[i] = num;
+            sampleIntArray2[i] = num;
+        }
+        // sort
+        selectionSort(sampleIntArray1, length);
+        sort(begin(sampleIntArray2), end(sampleIntArray2));
+        // print arrays
+        cout << endl;
+        cout << "selectionSort" << endl;
+        printArray(sampleIntArray1);
+        cout << "std::sort" << endl;
+        printArray(sampleIntArray2);
+        // check they are the same
+        REQUIRE(equal(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2)));
+    }
+
+    SECTION("string Test")
+    {
+        // setup
+        const int length = 8;
+        string sampleStringArray1[length]
+            = {"dog", "man", "jen", "aaa", "frisbee", "$%", "  9  ", "dog"};
+        string sampleStringArray2[length];
+        copy(begin(sampleStringArray1), end(sampleStringArray1), begin(sampleStringArray2));
+        // sort
+        selectionSort(sampleStringArray1, length);
+        sort(begin(sampleStringArray2), end(sampleStringArray2));
+        // print arrays
+        cout << endl;
+        cout << "selectionSort" << endl;
+        printArray(sampleStringArray1);
+        cout << "std::sort" << endl;
+        printArray(sampleStringArray2);
+        // check they are the same
+        REQUIRE(
+            equal(begin(sampleStringArray1), end(sampleStringArray1), begin(sampleStringArray2)));
+    }
+}
+
+TEST_CASE("Insertion Sort", "[Insertion]")
+{
+    SECTION("int Test")
+    {
+        // setup
+        const int length = 11;
+        int sampleIntArray1[length] = {23, -3, -2, 4, 11, 4, 7, 8, 0, 0, -3};
+        int sampleIntArray2[length];
+        copy(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2));
+        // sort
+        insertionSort(sampleIntArray1, length);
+        sort(begin(sampleIntArray2), end(sampleIntArray2));
+        // print arrays
+        cout << endl;
+        cout << "insertionSort" << endl;
+        printArray(sampleIntArray1);
+        cout << "std::sort" << endl;
+        printArray(sampleIntArray2);
+        // check they are the same
+        REQUIRE(equal(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2)));
+    }
+
+    SECTION("Random int Test")
+    {
+        // setup
+        const int length = 100;
+        int sampleIntArray1[length];
+        int sampleIntArray2[length];
+        random_device rd;
+        mt19937 rng(rd());
+        uniform_int_distribution<int> uni(-length, length);
+        for (int i = 0; i < length; i++)
+        {
+            int num = uni(rng);
+            sampleIntArray1[i] = num;
+            sampleIntArray2[i] = num;
+        }
+        // sort
+        insertionSort(sampleIntArray1, length);
+        sort(begin(sampleIntArray2), end(sampleIntArray2));
+        // print arrays
+        cout << endl;
+        cout << "insertionSort" << endl;
+        printArray(sampleIntArray1);
+        cout << "std::sort" << endl;
+        printArray(sampleIntArray2);
+        // check they are the same
+        REQUIRE(equal(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2)));
+    }
+
+    SECTION("string Test")
+    {
+        // setup
+        const int length = 8;
+        string sampleStringArray1[length]
+            = {"dog", "man", "jen", "aaa", "frisbee", "$%", "  9  ", "dog"};
+        string sampleStringArray2[length];
+        copy(begin(sampleStringArray1), end(sampleStringArray1), begin(sampleStringArray2));
+        // sort
+        insertionSort(sampleStringArray1, length);
+        sort(begin(sampleStringArray2), end(sampleStringArray2));
+        // print arrays
+        cout << endl;
+        cout << "insertionSort" << endl;
+        printArray(sampleStringArray1);
+        cout << "std::sort" << endl;
+        printArray(sampleStringArray2);
+        // check they are the same
+        REQUIRE(
+            equal(begin(sampleStringArray1), end(sampleStringArray1), begin(sampleStringArray2)));
+    }
+}
+
+TEST_CASE("Speed Comparison", "[Speed]")
+{
+    const int length = 2048;
+    // Generate Random Data Structures
+    int *testArray1 = new int[length];
+    int *testArray2 = new int[length];
+    int *testArray3 = new int[length];
+
+    // initialize random number generator in range min to max
     random_device rd;
     mt19937 rng(rd());
-    uniform_int_distribution<int> uni(-length, length);
-    for (int i = 0; i < length; i++) {
-      int num = uni(rng);
-      sampleIntArray1[i] = num;
-      sampleIntArray2[i] = num;
+    uniform_int_distribution<int> uni(0, length);
+
+    // fill data structures with random data
+    for (int i = 0; i < length; i++)
+    {
+        int num = uni(rng);
+        testArray1[i] = num;
+        testArray2[i] = num;
+        testArray3[i] = num;
     }
-    // sort
-    bubbleSort(sampleIntArray1, length);
-    sort(begin(sampleIntArray2), end(sampleIntArray2));
-    // print arrays
-    cout << endl;
-    cout << "bubbleSort" << endl;
-    printArray(sampleIntArray1);
-    cout << "std::sort" << endl;
-    printArray(sampleIntArray2);
-    // check they are the same
-    REQUIRE(equal(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2)));
-  }
 
-  SECTION("string Test") {
-    // setup
-    const int length = 8;
-    string sampleStringArray1[length]
-        = {"dog", "man", "jen", "aaa", "frisbee", "$%", "  9  ", "dog"};
-    string sampleStringArray2[length];
-    copy(begin(sampleStringArray1), end(sampleStringArray1), begin(sampleStringArray2));
-    // sort
-    bubbleSort(sampleStringArray1, length);
-    sort(begin(sampleStringArray2), end(sampleStringArray2));
-    // print arrays
-    cout << endl;
-    cout << "bubbleSort" << endl;
-    printArray(sampleStringArray1);
-    cout << "std::sort" << endl;
-    printArray(sampleStringArray2);
-    // check they are the same
-    REQUIRE(equal(begin(sampleStringArray1), end(sampleStringArray1), begin(sampleStringArray2)));
-  }
-}
+    // test bubble sort
+    using namespace std::chrono;
+    auto start = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
+    bubbleSort(testArray1, length);
+    auto end = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
 
-TEST_CASE("Selection Sort", "[Selection]") {
-  SECTION("int Test") {
-    // setup
-    const int length = 11;
-    int sampleIntArray1[length] = {23, -3, -2, 4, 11, 4, 7, 8, 0, 0, -3};
-    int sampleIntArray2[length];
-    copy(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2));
-    // sort
-    selectionSort(sampleIntArray1, length);
-    sort(begin(sampleIntArray2), end(sampleIntArray2));
-    // print arrays
-    cout << endl;
-    cout << "selectionSort" << endl;
-    printArray(sampleIntArray1);
-    cout << "std::sort" << endl;
-    printArray(sampleIntArray2);
-    // check they are the same
-    REQUIRE(equal(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2)));
-  }
+    long long bubbleSortTime = (end - start);
 
-  SECTION("Random int Test") {
-    // setup
-    const int length = 100;
-    int sampleIntArray1[length];
-    int sampleIntArray2[length];
-    random_device rd;
-    mt19937 rng(rd());
-    uniform_int_distribution<int> uni(-length, length);
-    for (int i = 0; i < length; i++) {
-      int num = uni(rng);
-      sampleIntArray1[i] = num;
-      sampleIntArray2[i] = num;
-    }
-    // sort
-    selectionSort(sampleIntArray1, length);
-    sort(begin(sampleIntArray2), end(sampleIntArray2));
-    // print arrays
-    cout << endl;
-    cout << "selectionSort" << endl;
-    printArray(sampleIntArray1);
-    cout << "std::sort" << endl;
-    printArray(sampleIntArray2);
-    // check they are the same
-    REQUIRE(equal(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2)));
-  }
+    // test selection sort
+    start = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
+    selectionSort(testArray2, length);
+    end = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
 
-  SECTION("string Test") {
-    // setup
-    const int length = 8;
-    string sampleStringArray1[length]
-        = {"dog", "man", "jen", "aaa", "frisbee", "$%", "  9  ", "dog"};
-    string sampleStringArray2[length];
-    copy(begin(sampleStringArray1), end(sampleStringArray1), begin(sampleStringArray2));
-    // sort
-    selectionSort(sampleStringArray1, length);
-    sort(begin(sampleStringArray2), end(sampleStringArray2));
-    // print arrays
-    cout << endl;
-    cout << "selectionSort" << endl;
-    printArray(sampleStringArray1);
-    cout << "std::sort" << endl;
-    printArray(sampleStringArray2);
-    // check they are the same
-    REQUIRE(equal(begin(sampleStringArray1), end(sampleStringArray1), begin(sampleStringArray2)));
-  }
-}
+    long long selectionSortTime = end - start;
 
-TEST_CASE("Insertion Sort", "[Insertion]") {
-  SECTION("int Test") {
-    // setup
-    const int length = 11;
-    int sampleIntArray1[length] = {23, -3, -2, 4, 11, 4, 7, 8, 0, 0, -3};
-    int sampleIntArray2[length];
-    copy(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2));
-    // sort
-    insertionSort(sampleIntArray1, length);
-    sort(begin(sampleIntArray2), end(sampleIntArray2));
-    // print arrays
-    cout << endl;
-    cout << "insertionSort" << endl;
-    printArray(sampleIntArray1);
-    cout << "std::sort" << endl;
-    printArray(sampleIntArray2);
-    // check they are the same
-    REQUIRE(equal(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2)));
-  }
+    // test insertion sort
+    start = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
+    insertionSort(testArray3, length);
+    end = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
 
-  SECTION("Random int Test") {
-    // setup
-    const int length = 100;
-    int sampleIntArray1[length];
-    int sampleIntArray2[length];
-    random_device rd;
-    mt19937 rng(rd());
-    uniform_int_distribution<int> uni(-length, length);
-    for (int i = 0; i < length; i++) {
-      int num = uni(rng);
-      sampleIntArray1[i] = num;
-      sampleIntArray2[i] = num;
-    }
-    // sort
-    insertionSort(sampleIntArray1, length);
-    sort(begin(sampleIntArray2), end(sampleIntArray2));
-    // print arrays
-    cout << endl;
-    cout << "insertionSort" << endl;
-    printArray(sampleIntArray1);
-    cout << "std::sort" << endl;
-    printArray(sampleIntArray2);
-    // check they are the same
-    REQUIRE(equal(begin(sampleIntArray1), end(sampleIntArray1), begin(sampleIntArray2)));
-  }
+    long long insertionSortTime = end - start;
 
-  SECTION("string Test") {
-    // setup
-    const int length = 8;
-    string sampleStringArray1[length]
-        = {"dog", "man", "jen", "aaa", "frisbee", "$%", "  9  ", "dog"};
-    string sampleStringArray2[length];
-    copy(begin(sampleStringArray1), end(sampleStringArray1), begin(sampleStringArray2));
-    // sort
-    insertionSort(sampleStringArray1, length);
-    sort(begin(sampleStringArray2), end(sampleStringArray2));
-    // print arrays
-    cout << endl;
-    cout << "insertionSort" << endl;
-    printArray(sampleStringArray1);
-    cout << "std::sort" << endl;
-    printArray(sampleStringArray2);
-    // check they are the same
-    REQUIRE(equal(begin(sampleStringArray1), end(sampleStringArray1), begin(sampleStringArray2)));
-  }
-}
+    // cout << stdSortTime << endl; // how long for std::sort
+    delete[] testArray1;
+    delete[] testArray2;
+    delete[] testArray3;
 
-TEST_CASE("Speed Comparison", "[Speed]") {
-  const int length = 2048;
-  // Generate Random Data Structures
-  int *testArray1 = new int[length];
-  int *testArray2 = new int[length];
-  int *testArray3 = new int[length];
-
-  // initialize random number generator in range min to max
-  random_device rd;
-  mt19937 rng(rd());
-  uniform_int_distribution<int> uni(0, length);
-
-  // fill data structures with random data
-  for (int i = 0; i < length; i++) {
-    int num = uni(rng);
-    testArray1[i] = num;
-    testArray2[i] = num;
-    testArray3[i] = num;
-  }
-
-  // test bubble sort
-  using namespace std::chrono;
-  auto start = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
-  bubbleSort(testArray1, length);
-  auto end = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
-
-  long long bubbleSortTime = (end - start);
-
-  // test selection sort
-  start = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
-  selectionSort(testArray2, length);
-  end = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
-
-  long long selectionSortTime = end - start;
-
-  // test insertion sort
-  start = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
-  insertionSort(testArray3, length);
-  end = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
-
-  long long insertionSortTime = end - start;
-
-  // cout << stdSortTime << endl; // how long for std::sort
-  delete[] testArray1;
-  delete[] testArray2;
-  delete[] testArray3;
-
-  REQUIRE(bubbleSortTime > selectionSortTime);
-  REQUIRE(bubbleSortTime > insertionSortTime);
-  REQUIRE(selectionSortTime > insertionSortTime);
+    REQUIRE(bubbleSortTime > selectionSortTime);
+    REQUIRE(bubbleSortTime > insertionSortTime);
+    REQUIRE(selectionSortTime > insertionSortTime);
 }

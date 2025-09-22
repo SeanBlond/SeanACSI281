@@ -34,25 +34,57 @@
 
 using namespace std;
 
-namespace csi281 {
+namespace csi281
+{
 
-  // Performs an in-place ascending sort of *array* of size *length*
-  // using the bubble sort algorithm
-  template <typename T> void bubbleSort(T array[], const int length) {
-    // YOUR CODE HERE
-  }
+    // Performs an in-place ascending sort of *array* of size *length*
+    // using the bubble sort algorithm
+    template <typename T> void bubbleSort(T array[], const int length)
+    {
+        bool sorted = false;
+        bool swapped = false;
+        int index = 0;
+        while (!sorted)
+        {
+            if (index < (length - 1) && array[index] > array[index + 1])
+            {
+                    swapped = true;
+                    std::swap(array[index], array[index + 1]);
+            }
 
-  // Performs an in-place ascending sort of *array* of size *length*
-  // using the selection sort algorithm
-  template <typename T> void selectionSort(T array[], const int length) {
-    // YOUR CODE HERE
-  }
+            if (index == (length - 1) && !swapped) sorted = true;
 
-  // Performs an in-place ascending sort of *array* of size *length*
-  // using the insertion sort algorithm
-  template <typename T> void insertionSort(T array[], const int length) {
-    // YOUR CODE HERE
-  }
+            index++
+        }
+    }
+
+    // Performs an in-place ascending sort of *array* of size *length*
+    // using the selection sort algorithm
+    template <typename T> void selectionSort(T array[], const int length)
+    {
+        int lowestIndex = array[0];
+        int index = 0;
+        bool sorted = false;
+
+        while (sorted)
+        {
+            for (int i = index; i < length; i++)
+            {
+                if (array[i] < array[lowestIndex]) lowestIndex = 0;
+            }
+            std::swap(array[0], array[lowestIndex]);
+            index++;
+
+            if (index == length - 1) sorted = true;
+        }
+    }
+
+    // Performs an in-place ascending sort of *array* of size *length*
+    // using the insertion sort algorithm
+    template <typename T> void insertionSort(T array[], const int length)
+    {
+        // YOUR CODE HERE
+    }
 }  // namespace csi281
 
 #endif /* sort_hpp */
