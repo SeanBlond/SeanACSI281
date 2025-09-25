@@ -41,30 +41,12 @@ namespace csi281
     // using the bubble sort algorithm
     template <typename T> void bubbleSort(T array[], const int length)
     {
-        bool sorted = false;
-        bool swapped = false;
-        int index = 0;
-        while (!sorted)
-        {
-            if (index > (length - 1) && array[index] > array[index + 1])
-            {
-                    swapped = true;
-                    std::swap(array[index], array[index + 1]);
-            }
-
-            if (index == (length - 1) && !swapped) sorted = true;
-
-            index++;
-        }
-
         for (int i = 0; i < length; i++)
-        {  // n passes
-            for (int j = 0; j < length - 1; j++)
-            {  // linear pass
-                if (array[j] > array[j + 1])
-                {  // swap if the element is greater than the next
+        {
+            for (int j = 0; j < length - i - 1; j++)
+            {
+                if (array[j] > array[j + 1]) 
                     swap(array[j], array[j + 1]);
-                }
             }
         }
     }
@@ -73,20 +55,18 @@ namespace csi281
     // using the selection sort algorithm
     template <typename T> void selectionSort(T array[], const int length)
     {
-        int lowestIndex = 0;
-        int index = 0;
-        bool sorted = false;
 
-        while (sorted)
+        for (int i = 0; i < length - 1; i++)
         {
-            for (int i = index; i < length; i++)
+            int indexLowest = i;
+            for (int j = i + 1; j < length; j++)
             {
-                if (array[i] < array[lowestIndex]) lowestIndex = 0;
+                if (array[j] < array[indexLowest])
+                {
+                    indexLowest = j;
+                }
             }
-            std::swap(array[0], array[lowestIndex]);
-            index++;
-
-            if (index == length - 1) sorted = true;
+            swap(array[i], array[indexLowest]);
         }
     }
 
@@ -96,13 +76,15 @@ namespace csi281
     {
         for (int i = 1; i < length; i++)
         {
-            int index = i - 1;
+            T currentValue = array[i];
+            int checkIndex = i - 1;
 
-            while (index >= 0 && array[i] < array[index])
+            while (checkIndex >= 0 && array[checkIndex] > currentValue)
             {
-                std::swap(array[i], array[index]);
-                index--;
+                array[checkIndex + 1] = array[checkIndex];
+                checkIndex--;
             }
+            array[checkIndex + 1] = currentValue;
         }
     }
 }  // namespace csi281
