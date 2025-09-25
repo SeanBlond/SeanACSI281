@@ -3,9 +3,11 @@ at the top in this repository. Please number each answer.
 
 1. What is the tightest bound Big-O runtime of randomIntArray()?
 Please explain your answer (succinctly).
+The tightest bound Big-O is O(n), since the function will run n times, where n is the input of how many numbers to generate.
 
 2. What is the tightest bound Big-O runtime of arraySearchSpeed()?
 Please explain your answer (succinctly).
+The tightest bound Big-O is O(n^2), since the linear search is done n times (n * n = n^2).
 
 3. In the worst case how many searches do you need to do to make it worthwhile
 to sort an array to use binary search instead of just using linear search
@@ -16,5 +18,18 @@ search takes 5 instructions for each element considered and binary search takes
 the sorting algorithm takes 12 * N * log(N) instructions to complete. Your 
 final answer just needs to be a single number, but show your work (math).
 
+The worst case scenario for number of searches to justify sorting then using binary search is 1,544,658 searches.
+My math is as follows:
+N = 10,000
+L = 5N = 50,000 (linear search instruction total)
+B = log(N) = 133 (binary search instruction total)
+S = 12 * N * log(N) = 1594525 (sorting algorithm instruction total)
+((B+S) - L) = 1,544,658 (justifiable search amount)
+
+
 4. The function arraySearchSpeed() returns a pair. List three alternative C++
 constructs that could have been used instead of pair as the return type.
+Some alternatives are:
+1. A Class with variables for each nanosecond value
+2. A Struct with variables for each nanosend value
+3. An array of nanoseconds with length 2

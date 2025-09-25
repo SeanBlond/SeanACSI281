@@ -55,10 +55,6 @@ namespace csi281
             numArray[i] = distrubition(generator);
         }
 
-        // Sorting the Random Numbers
-        int *beginning = (numArray);
-        int *ending = (numArray + length);
-        std::sort(beginning, ending);
 
         return numArray;
     }
@@ -82,6 +78,12 @@ namespace csi281
     {
         int *testArray = randomIntArray(length, 0, length);
         int *testKeys = randomIntArray(numTests, 0, length);
+
+        // Sorting the Random Numbers
+        int *beginning = (testArray);
+        int *ending = (testArray + length);
+        std::sort(beginning, ending);
+
 
         using namespace std::chrono;
 
