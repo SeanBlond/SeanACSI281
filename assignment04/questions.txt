@@ -12,7 +12,8 @@ It also helps that selectionSort() is always O(n^2), rather than varying between
 
 3. What property does a custom class need to have for it to be usable in an array with the three sort methods you implemented? Give a name to the concept and also explain specifically in C++ what would need to be implemented.
 A custom class used to measure the sorting algorithms would be a time measurement class, which would have values for date, hours, minutes, time, and nanoseconds. 
-The class would need a function to save the values at a certain point in time, and a comparison operator to compare different time measurements.
+The class would need a function to save the values at a certain point in time, a subtraction operator to get the time difference between the start and end of a sort,
+and a comparison operator to compare different time measurements.
 
 4. Why is std::sort so much faster than any of our implementations? Is it primarily because it is better optimized, or is it something more fundamental?
 std::sort is so much faster than our implementations because it is a hybrid sort of several different algorithms. It isn't just better optimized, it has
