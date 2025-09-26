@@ -3,10 +3,17 @@ at the top in this repository. Please number each answer.
 
 1. Why is bubbleSort() slower than selectionSort() and insertionSort()?
 Please explain your answer (succinctly).
+bubbleSort() is slower than selectionSort() and insertionSort() because is O(n^2) in the worst case, and (when compared to insertion sort) cannot exit out of it's loop early.
 
 2. Why is an optimized insertionSort() faster than selectionSort()?
 Please explain your answer (succinctly).
+An optimized insertionSort() is faster because it does not continously call std::swap, instead storing the value then moving others further through the array.
+It also helps that selectionSort() is always O(n^2), rather than varying between O(n) and O(n^2) like insertionSort().
 
 3. What property does a custom class need to have for it to be usable in an array with the three sort methods you implemented? Give a name to the concept and also explain specifically in C++ what would need to be implemented.
+A custom class used to measure the sorting algorithms would be a time measurement class, which would have values for date, hours, minutes, time, and nanoseconds. 
+The class would need a function to save the values at a certain point in time, and a comparison operator to compare different time measurements.
 
 4. Why is std::sort so much faster than any of our implementations? Is it primarily because it is better optimized, or is it something more fundamental?
+std::sort is so much faster than our implementations because it is a hybrid sort of several different algorithms. It isn't just better optimized, it has
+better sorting algorithms (including quicksort) that have efficiencies like O(NlogN).
