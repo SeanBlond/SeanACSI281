@@ -125,7 +125,7 @@ namespace csi281
     {
         if (start >= end) return;
 
-        for (int i = start; i < (end + 1); i++)
+        for (int i = start+1; i < (end + 1); i++)
         {
             T currentValue = array[i];
             int checkIndex = i - 1;
