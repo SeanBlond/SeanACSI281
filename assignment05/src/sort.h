@@ -151,10 +151,19 @@ namespace csi281
     {
         if (start >= end) return;
 
-        if (end - start + 1 < 10)
-            insertionSort(array, start, end);
+        int mid = start + (end - start) / 2;
+
+        if (mid - start < 10)
+            insertionSort(array, start, mid);
         else
-            mergeSort(array, start, end);
+            mergeSort(array, start, mid);
+
+        if (end - (mid + 1) < 10)
+            insertionSort(array, mid + 1, end);
+        else
+            mergeSort(array, mid + 1, end);
+
+        std::inplace_merge(array + start, array + mid + 1, array + end + 1);
     }
 
 }  // namespace csi281
