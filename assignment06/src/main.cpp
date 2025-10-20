@@ -32,9 +32,10 @@
 
 #include "HashTable.h"
 
-int main(int argc, char* argv[]) {
-  // just a plain simple test, use the other file for extensive tests
-  csi281::HashTable<std::string, int> ht;
-  ht.put("age", 5);
-  std::cout << ht.get("age").value() << std::endl;
+int main(int argc, char* argv[])
+{
+    // just a plain simple test, use the other file for extensive tests
+    csi281::HashTable<std::string, int> ht;
+    ht.put("age", 5);
+    std::cout << ht.get("age").value() << std::endl;
 }

@@ -42,94 +42,177 @@
 
 using namespace std;
 
-namespace csi281 {
-  template <typename K, typename V> class HashTable {
-  public:
-    // Initialize the array with a starting capacity
-    HashTable(int cap = DEFAULT_CAPACITY) {
-      if (cap < 1) {
-        cap = 1;
-      }  // cannot have < 1 capacity
-      resize(cap);
-    }
-
-    // Erase the array
-    ~HashTable() { delete[] backingStore; }
-
-    // Put the key value pair in the hash table
-    // If *key* is already present, change its
-    // associated value to *value*
-    // If the load factor exceeds the MAX_LOAD_FACTOR
-    // then resize the table
-    // TIP: Be careful to get a reference to the list at each
-    // location in the backing store, so you're modifying
-    // the original and not a copy
-    void put(const K key, const V value) {
-      // YOUR CODE HERE
-    }
-
-    // Get the item associated with a particular key
-    // return an empty optional (nullopt) if the item is not found
-    // and returns an optional with the value associated with key
-    // if key is found
-    // TIP: read the documentation on optional
-    // https://en.cppreference.com/w/cpp/utility/optional
-    // TIP: Be careful to get a reference to the list at each
-    // location in the backing store, so you're modifying
-    // the original and not a copy
-    optional<V> get(const K &key) {
-      // YOUR CODE HERE
-    }
-
-    // Remove a key and any associated value from the hash table
-    // TIP: I suggest using remove_if()
-    // https://en.cppreference.com/w/cpp/algorithm/remove
-    // TIP: Be careful to get a reference to the list at each
-    // location in the backing store, so you're modifying
-    // the original and not a copy
-    void remove(const K &key) {
-      // YOUR CODE HERE
-    }
-
-    // Calculate and return the load factor
-    float getLoadFactor() { return ((float)count) / ((float)capacity); }
-
-    // Get the count
-    int getCount() { return count; }
-
-    // Get the capacity
-    int getCapacity() { return capacity; }
-
-    // Print out the contents of the hash table
-    void debugPrint() {
-      for (int i = 0; i < capacity; i++) {
-        cout << i << ":";
-        for (auto p : backingStore[i]) {
-          cout << " -> (" << p.first << ", " << p.second << ")";
+namespace csi281
+{
+    template <typename K, typename V> class HashTable
+    {
+      public:
+        // Initialize the array with a starting capacity
+        HashTable(int cap = DEFAULT_CAPACITY)
+        {
+            if (cap < 1)
+            {
+                cap = 1;
+            }  // cannot have < 1 capacity
+            resize(cap);
         }
-        cout << endl;
-      }
-    }
 
-  private:
-    int capacity = 0;
-    int growthFactor = 2;
-    int count = 0;
-    hash<K> key_hash;
-    list<pair<K, V>> *backingStore = nullptr;
+        // Erase the array
+        ~HashTable() { delete[] backingStore; }
 
-    // Shift all of the items in backingStore into a
-    // new backing store of size cap, or create
-    // the backingStore for the first time
-    void resize(int cap) {
-      // YOUR CODE HERE
-    }
+        // Put the key value pair in the hash table
+        // If *key* is already present, change its
+        // associated value to *value*
+        // If the load factor exceeds the MAX_LOAD_FACTOR
+        // then resize the table
+        // TIP: Be careful to get a reference to the list at each
+        // location in the backing store, so you're modifying
+        // the original and not a copy
+        void put(const K key, const V value)
+        {
+            // YOUR CODE HERE
+            if (getLoadFactor() >= MAX_LOAD_FACTOR)
+            {
+                resize(capacity * growthFactor);
+            }
 
-    // hash anything into an integer appropriate for
-    // the current capacity
-    // TIP: use the std::hash key_hash defined as a private variable
-    size_t hashKey(const K &key) { return key_hash(key); }
-  };
+            int loc = hashKey(key);
+            auto &data = backingStore[loc];
+            bool found = false;
+
+            for (auto &keyPair : data)
+            {
+                if (keyPair.first == key)
+                {
+                    found = true;
+                    keyPair.second = value;
+                }
+            }
+
+            if (!found)
+            {
+                data.emplace_back(pair<K, V>(key, value));
+            }
+        }
+
+        // Get the item associated with a particular key
+        // return an empty optional (nullopt) if the item is not found
+        // and returns an optional with the value associated with key
+        // if key is found
+        // TIP: read the documentation on optional
+        // https://en.cppreference.com/w/cpp/utility/optional
+        // TIP: Be careful to get a reference to the list at each
+        // location in the backing store, so you're modifying
+        // the original and not a copy
+        optional<V> get(const K &key)
+        {
+            // YOUR CODE HERE
+            if (backingStore == nullptr) return nullopt;
+            
+            int loc = hashKey(key);
+            auto &data = backingStore[loc];
+            
+            for (auto &KeyPair : data)
+            {
+                if (KeyPair.first == key)
+                {
+                    return KeyPair.second;
+                }
+            }
+        }
+
+        // Remove a key and any associated value from the hash table
+        // TIP: I suggest using remove_if()
+        // https://en.cppreference.com/w/cpp/algorithm/remove
+        // TIP: Be careful to get a reference to the list at each
+        // location in the backing store, so you're modifying
+        // the original and not a copy
+        void remove(const K &key)
+        {
+            // YOUR CODE HERE
+            if (backingStore == nullptr) return;
+
+            int loc = hashKey(key);
+            auto &data = backingStore[loc];
+
+            for (auto &KeyPair : data)
+            {
+                if (KeyPair.first == key)
+                {
+                    data.remove(KeyPair);
+                    count--;
+                    break;
+                }
+            }
+        }
+
+        // Calculate and return the load factor
+        float getLoadFactor() { return ((float)count) / ((float)capacity); }
+
+        // Get the count
+        int getCount() { return count; }
+
+        // Get the capacity
+        int getCapacity() { return capacity; }
+
+        // Print out the contents of the hash table
+        void debugPrint()
+        {
+            for (int i = 0; i < capacity; i++)
+            {
+                cout << i << ":";
+                for (auto p : backingStore[i])
+                {
+                    cout << " -> (" << p.first << ", " << p.second << ")";
+                }
+                cout << endl;
+            }
+        }
+
+      private:
+        int capacity = 0;
+        int growthFactor = 2;
+        int count = 0;
+        hash<K> key_hash;
+        list<pair<K, V>> *backingStore = nullptr;
+
+        // Shift all of the items in backingStore into a
+        // new backing store of size cap, or create
+        // the backingStore for the first time
+        void resize(int cap)
+        {
+            // YOUR CODE HERE
+
+            list<pair<K, V>> *newBackingStore = new list<pair<K, V>>[cap];
+
+            // Checking if the backingStore needs to be created
+            if (backingStore == nullptr)
+            {
+                backingStore = newBackingStore;
+                capacity = cap;
+                return;
+            }
+
+            // Resizing the backingStore
+            for (int i = 0; i < capacity; i++)
+            {
+                for (auto pair : backingStore[i])
+                {
+                    int loc = hashKey(pair.first) % cap;
+                    newBackingStore[loc].push_back(pair);
+                }
+            }
+
+            delete[] backingStore;
+            backingStore = newBackingStore;
+            capacity = cap;
+        }
+
+        // hash anything into an integer appropriate for
+        // the current capacity
+        // TIP: use the std::hash key_hash defined as a private variable
+        size_t hashKey(const K &key) { return key_hash(key); }
+    };
 
 }  // namespace csi281
 
