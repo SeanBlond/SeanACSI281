@@ -71,12 +71,7 @@ namespace csi281
         void put(const K key, const V value)
         {
             // YOUR CODE HERE
-            if (getLoadFactor() >= MAX_LOAD_FACTOR)
-            {
-                resize(capacity * growthFactor);
-            }
-
-            int loc = hashKey(key);
+            int loc = hashKey(key) % capacity;
             auto &data = backingStore[loc];
             bool found = false;
 
@@ -86,12 +81,19 @@ namespace csi281
                 {
                     found = true;
                     keyPair.second = value;
+                    break;
                 }
             }
 
             if (!found)
             {
                 data.emplace_back(pair<K, V>(key, value));
+                count++;
+            }
+
+            if (getLoadFactor() >= MAX_LOAD_FACTOR)
+            {
+                resize(capacity * growthFactor);
             }
         }
 
@@ -109,7 +111,7 @@ namespace csi281
             // YOUR CODE HERE
             if (backingStore == nullptr) return nullopt;
             
-            int loc = hashKey(key);
+            int loc = hashKey(key) % capacity;
             auto &data = backingStore[loc];
             
             for (auto &KeyPair : data)
@@ -119,6 +121,8 @@ namespace csi281
                     return KeyPair.second;
                 }
             }
+
+            return nullopt;
         }
 
         // Remove a key and any associated value from the hash table
@@ -132,7 +136,7 @@ namespace csi281
             // YOUR CODE HERE
             if (backingStore == nullptr) return;
 
-            int loc = hashKey(key);
+            int loc = hashKey(key) % capacity;
             auto &data = backingStore[loc];
 
             for (auto &KeyPair : data)
