@@ -33,13 +33,42 @@
 
 using namespace std;
 
-namespace csi281 {
-  template <typename T> class Queue : public SequentialCollection<T> {
-  public:
-    // YOUR CODE HERE
-  protected:
-    using SequentialCollection<T>::backingStore;
-  };
+namespace csi281
+{
+    template <typename T> class Queue : public SequentialCollection<T>
+    {
+      public:
+        // Put a new element in the collection
+        void push(const T &item) override
+        { 
+            backingStore.push_back(item);
+        }
+
+        // Remove and return the next element from the collection
+        T pop() override
+        {
+            if (backingStore.empty())
+            {
+                throw std::runtime_error("The Queue is empty, cannot return any elements");
+            }
+            backingStore.pop_front();
+            return backingStore.front();
+        }
+
+        // Access the next element in the collection
+        T &peek() override
+        { 
+            if (backingStore.empty())
+            {
+                throw std::runtime_error("The Queue is empty, cannot return any elements");
+            }
+
+            return backingStore.front();
+        }
+
+      protected:
+        using SequentialCollection<T>::backingStore;
+    };
 }  // namespace csi281
 
 #endif /* queue_hpp */

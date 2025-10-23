@@ -35,31 +35,35 @@
 
 using namespace std;
 
-namespace csi281 {
+namespace csi281
+{
 
-  template <typename T> class SequentialCollection {
-  public:
-    // Put a new element in the collection
-    virtual void push(const T &item) = 0;
-    // Remove and return the next element from the collection
-    virtual T pop() = 0;
-    // Access the next element in the collection
-    virtual T &peek() = 0;
-    // Remove all ocurrences of *item* from the collection
-    virtual void remove(const T &item) { backingStore.remove(item); };
-    // Return the number of items in the collection
-    int getCount() { return backingStore.size(); }
-    // Debug print out the contents of the collection
-    void debugPrint() {
-      for (auto const &p : backingStore) {
-        cout << " -> (" << p << ")";
-      }
-      cout << endl;
-    }
+    template <typename T> class SequentialCollection
+    {
+      public:
+        // Put a new element in the collection
+        virtual void push(const T &item) = 0;
+        // Remove and return the next element from the collection
+        virtual T pop() = 0;
+        // Access the next element in the collection
+        virtual T &peek() = 0;
+        // Remove all ocurrences of *item* from the collection
+        virtual void remove(const T &item) { backingStore.remove(item); };
+        // Return the number of items in the collection
+        int getCount() { return backingStore.size(); }
+        // Debug print out the contents of the collection
+        void debugPrint()
+        {
+            for (auto const &p : backingStore)
+            {
+                cout << " -> (" << p << ")";
+            }
+            cout << endl;
+        }
 
-  protected:
-    list<T> backingStore = list<T>();
-  };
+      protected:
+        list<T> backingStore = list<T>();
+    };
 }  // namespace csi281
 
 #endif /* sequential_collections_hpp */

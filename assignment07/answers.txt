@@ -1,0 +1,18 @@
+Sean Ammon - answers.txt
+
+1. List 3 examples of a real world queue.
+    - IT Ticket System
+    - Kitchen Order Requests
+    - A line of people waiting to get a signature from a famous person
+
+2. List 3 examples of a real world stack.
+    - A stack of papers that need to be signed
+    - A stack of plates to be cleaned
+    - A list of undo caches in a software
+
+3. If a piece of software passes all of its unit tests does it necessarily work correctly? Why or why not?
+    It does not, you can never fully prepare for every situtation (unless the software is really really simple). 
+
+4. Why is a linked list better than a fixed-size array for implementing stacks and queues?
+    A linked list is better because it can have more elements than a fixed-size array. Also, since you only need to access the front and back elements
+    of the stack and queue, a linked list with a head and tail pointer will have the same efficiency as an array.
