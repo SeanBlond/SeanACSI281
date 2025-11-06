@@ -172,10 +172,52 @@ TEST_CASE("dijkstra() cityGraph2 Test", "[dijksta]") {
 }
 
 // YOUR CODE HERE
-// ADD YOUR OWN TEST CASE
-// Prove that dijkstra() works correctly in your own test case,
-// using the methods of WeightedGraph.
-// You should make up your own graph and test it. Do not
-// reuse cityGraph or cityGraph2. Cite any sources.
-// Make sure that your assertions are fairly comprehensive.
-// Look at the prior two tests as examples.
+TEST_CASE("dijkstra() Sean Tests", "[dijksta]")
+{
+    // Creating a graph of locations around burlington with distances measured in miles
+    WeightedGraph<string, float> burlingtonMap = WeightedGraph<string, float>();
+    burlingtonMap.addEdge("Finney Quad", "MIC", 0.3f);
+    burlingtonMap.addEdge("Finney Quad", "CCM", 0.2f);
+    burlingtonMap.addEdge("MIC", "CCM", 0.1f);
+    burlingtonMap.addEdge("Lakeside", "CCM", 1.3f);
+    burlingtonMap.addEdge("Lakeside", "Finney Quad", 1.4f);
+    burlingtonMap.addEdge("Oakledge Park", "Lakeside", 0.8f);
+    burlingtonMap.addEdge("Red Rocks Park", "Oakledge Park", 1.2f);
+    burlingtonMap.addEdge("Waterfront Park", "Lakeside", 1.6f);
+    burlingtonMap.addEdge("Waterfront Park", "Finney Quad", 1.1f);
+    burlingtonMap.addEdge("Waterfront Park", "North Beach Park", 1.4f);
+    burlingtonMap.addEdge("Church Street", "CCM", 0.6f);
+    burlingtonMap.addEdge("Church Street", "Waterfront Park", 0.6f);
+    burlingtonMap.addEdge("Church Street", "Finney Quad", 0.6f);
+    burlingtonMap.addEdge("Church Street", "Lake Champlain Chocolates", 0.2f);
+
+    // Distance Tests
+    cout << "Burlington Map Tests" << endl;
+    burlingtonMap.debugPrint();
+    auto results = burlingtonMap.dijkstra("Finney Quad");
+    auto parentResults = results.first;
+    auto weightResults = results.second;
+    CHECK(weightResults["CCM"] == 0.2f);
+    CHECK(weightResults["Waterfront Park"] == 1.1f);
+    CHECK(weightResults["Oakledge Park"] == 2.2f);
+    CHECK(weightResults["Red Rocks Park"] == 3.4f);
+    CHECK(weightResults["Lake Champlain Chocolates"] == 0.8f);
+
+    // Path Tests
+    auto path = burlingtonMap.pathMapToPath(parentResults, "Red Rocks Park");
+    // Path should be Finney Quad > Lakeside > Oakledge Park > Red Rocks Park
+    cout << "Burlington Path Test(s)" << endl;
+    printPath(path);
+    // Shortest path should be
+    CHECK(path.size() == 4);
+    CHECK(path.front() == "Finney Quad");
+    CHECK(path.back() == "Red Rocks Park");
+
+    // ADD YOUR OWN TEST CASE
+    // Prove that dijkstra() works correctly in your own test case,
+    // using the methods of WeightedGraph.
+    // You should make up your own graph and test it. Do not
+    // reuse cityGraph or cityGraph2. Cite any sources.
+    // Make sure that your assertions are fairly comprehensive.
+    // Look at the prior two tests as examples.
+}
