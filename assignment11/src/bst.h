@@ -39,77 +39,159 @@
 
 using namespace std;
 
-namespace csi281 {
+namespace csi281
+{
 
-  template <typename T> class BST {
-  public:
-    // *Node* represents one node in the tree
-    struct Node {
-      Node(T k, Node *l, Node *r) : key(k), left(l), right(r) {}
-      T key;
-      Node *left;
-      Node *right;
+    template <typename T> class BST
+    {
+      public:
+        // *Node* represents one node in the tree
+        struct Node
+        {
+            Node(T k, Node *l, Node *r) : key(k), left(l), right(r) {}
+            T key;
+            Node *left;
+            Node *right;
+        };
+
+        // Delete a node and all of its children
+        void deleteHelper(Node *node)
+        {
+            if (node == nullptr)
+            {
+                return;
+            }
+            deleteHelper(node->left);
+            deleteHelper(node->right);
+            delete node;
+        }
+
+        // Delete all nodes
+        ~BST() { deleteHelper(root); }
+
+        // Add a new node to the tree with *key*
+        // Make sure to insert it into the correct place
+        // NOTE: We are allowing duplicates, so, <= and >, or < and >=
+        // for traversing left and right should be used
+        // TIP: If the tree is empty, remember that you
+        // need to initialize root
+        void insert(T key)
+        {
+            // YOUR CODE HERE
+            count++;
+            // Checking if tree is empty
+            if (root == nullptr)
+            {
+                root = new Node(key, nullptr, nullptr);
+                return;
+            }
+
+            // Finding position to put node
+            Node *current = root;
+            while (current != nullptr)
+            {
+                // Checking if node should be added
+                if (key <= current->key && current->left == nullptr)
+                {
+                    current->left = new Node(key, nullptr, nullptr);
+                    return;
+                }
+                else if (key > current->key && current->right == nullptr)
+                {
+                    current->right = new Node(key, nullptr, nullptr);
+                    return;
+                }
+
+                else if (key <= current->key)
+                {
+                    current = current->left;
+                }
+                else
+                {
+                    current = current->right;
+                }
+            }
+        }
+
+        // Do a search through the tree and return
+        // whether or not it contains *key*
+        bool contains(const T &key)
+        {
+            // YOUR CODE HERE
+            // Going through the progression of the tree
+            Node *current = root;
+            while (current != nullptr)
+            {
+                if (key == current->key) 
+                    return true;
+                else if (key < current->key)
+                    current = current->left;
+                else
+                    current = current->right;
+            }
+            return false;
+        }
+
+        // Helper for inOrderWalk() to call for entire bst
+        void inOrderWalk(list<T> &accumulated) { inOrderWalk(accumulated, root); }
+
+        // Walk through the entire tree in ascending order, starting
+        // from *current*, and accumulate the values in the
+        // list *accumulated*
+        // TIP: See page 288 of Chapter 12 of Introduction to Algorithms
+        void inOrderWalk(list<T> &accumulated, Node *current)
+        {
+            // YOUR CODE HERE
+            if (current != nullptr)
+            {
+                inOrderWalk(accumulated, current->left);
+                accumulated.push_back(current->key);
+                inOrderWalk(accumulated, current->right);
+            }
+
+        }
+
+        // Find the minimum key in the tree
+        // If the tree is empty, return nullopt
+        optional<T> minimum()
+        {
+            // YOUR CODE HERE
+            // Initial set up
+            if (root == nullptr) return nullopt;
+            Node *current = root;
+            
+            // Going through each left-most element to find the min (final left)
+            while (current->left != nullptr)
+            {
+                current = current->left;
+            }
+            return current->key;
+        }
+
+        // Find the maximum key in the tree
+        // If the tree is empty, return nullopt
+        optional<T> maximum()
+        {
+            // YOUR CODE HERE
+            // Initial set up
+            if (root == nullptr) return nullopt;
+            Node *current = root;
+
+            // Going through each right-most element to find the min (final right)
+            while (current->right != nullptr)
+            {
+                current = current->right;
+            }
+            return current->key;
+        }
+
+        // How many nodes are in the tree?
+        int getCount() { return count; }
+
+      private:
+        Node *root = nullptr;
+        int count = 0;
     };
-
-    // Delete a node and all of its children
-    void deleteHelper(Node *node) {
-      if (node == nullptr) {
-        return;
-      }
-      deleteHelper(node->left);
-      deleteHelper(node->right);
-      delete node;
-    }
-
-    // Delete all nodes
-    ~BST() { deleteHelper(root); }
-
-    // Add a new node to the tree with *key*
-    // Make sure to insert it into the correct place
-    // NOTE: We are allowing duplicates, so, <= and >, or < and >=
-    // for traversing left and right should be used
-    // TIP: If the tree is empty, remember that you
-    // need to initialize root
-    void insert(T key) {
-      // YOUR CODE HERE
-    }
-
-    // Do a search through the tree and return
-    // whether or not it contains *key*
-    bool contains(const T &key) {
-      // YOUR CODE HERE
-    }
-
-    // Helper for inOrderWalk() to call for entire bst
-    void inOrderWalk(list<T> &accumulated) { inOrderWalk(accumulated, root); }
-
-    // Walk through the entire tree in ascending order, starting
-    // from *current*, and accumulate the values in the
-    // list *accumulated*
-    // TIP: See page 288 of Chapter 12 of Introduction to Algorithms
-    void inOrderWalk(list<T> &accumulated, Node *current) {
-      // YOUR CODE HERE
-    }
-
-    // Find the minimum key in the tree
-    // If the tree is empty, return nullopt
-    optional<T> minimum() {
-      // YOUR CODE HERE
-    }
-
-    // Find the maximum key in the tree
-    // If the tree is empty, return nullopt
-    optional<T> maximum() {
-      // YOUR CODE HERE
-    }
-
-    // How many nodes are in the tree?
-    int getCount() { return count; }
-
-  private:
-    Node *root = nullptr;
-    int count = 0;
-  };
 
 }  // namespace csi281
 
